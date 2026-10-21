@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17171C" />
+  <title>أرشيفكس — لوحة التحكم</title>
+  <meta name="description" content="أرشيفكس — نظام أرشفة وإدارة مستندات ذكي للمؤسسات التعليمية والشركات. نموذج واجهة تفاعلي." />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    // Apply the saved preference before first paint to avoid a flash.
+    (() => {
+      try {
+        const params = new URLSearchParams(location.search);
+        const theme = params.get('theme') || localStorage.getItem('archifex-theme');
+        const lang = params.get('lang') || localStorage.getItem('archifex-lang');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        if (lang === 'ar' || lang === 'en') {
+          document.documentElement.lang = lang;
+          document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20261021" />
+  <link rel="stylesheet" href="platform.css?v=20261021" />
+  <script>
+    // Authentication gate: the demo opens only after sign-in or registration.
+    (() => {
+      try {
+        const raw = sessionStorage.getItem('archifex-session-v1') || localStorage.getItem('archifex-session-v1');
+        const session = raw ? JSON.parse(raw) : null;
+        const valid = session && session.email && (!session.expiresAt || Date.now() <= session.expiresAt);
+        if (!valid) {
+          sessionStorage.removeItem('archifex-session-v1');
+          localStorage.removeItem('archifex-session-v1');
+          const next = location.pathname + location.search + location.hash;
+          location.replace('/login/?next=' + encodeURIComponent(next));
+        }
+      } catch (e) {
+        location.replace('/login/');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">تجاوز إلى المحتوى</a>
+
+  <!-- Icon sprite -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-files" viewBox="0 0 24 24"><path d="M8 3.8h6.2L19 8.6v9.1a2.5 2.5 0 0 1-2.5 2.5H8a2.5 2.5 0 0 1-2.5-2.5V6.3A2.5 2.5 0 0 1 8 3.8Z"/><path d="M14 3.8v4.8h4.8M9 13h6M9 16.4h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="i-workflow" viewBox="0 0 24 24"><rect x="3.5" y="4" width="6" height="5" rx="1.6"/><rect x="14.5" y="15" width="6" height="5" rx="1.6"/><path d="M6.5 9v4.2a2.8 2.8 0 0 0 2.8 2.8h5.2"/><path d="M12.6 14.2 14.5 16l-1.9 1.8"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.6 3.8H20v7.4l-8.4 8.4a1.8 1.8 0 0 1-2.6 0l-4.8-4.8a1.8 1.8 0 0 1 0-2.6l8.4-8.4Z"/><circle cx="16.4" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-graduation" viewBox="0 0 24 24"><path d="m2.8 9.2 9.2-4.4 9.2 4.4-9.2 4.4-9.2-4.4Z"/><path d="M6.6 11.2v4.2c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.2M21.2 9.2v5.6"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20.5V5.2c0-.9.7-1.7 1.7-1.7h7.1c.9 0 1.7.8 1.7 1.7v15.3M14.5 9.5h3.8c.9 0 1.7.8 1.7 1.7v9.3M2.8 20.5h18.4"/><path d="M7.5 7.5h3M7.5 11h3M7.5 14.5h3"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.6 19.4c.4-3 2.6-4.8 5.4-4.8s5 1.8 5.4 4.8"/><path d="M16 5.4a3 3 0 0 1 0 5.7M17.4 14.9c1.8.5 3 2 3.2 4.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.4c0 4.1-2.8 7.4-7 9.4-4.2-2-7-5.3-7-9.4V6l7-2.8Z"/><path d="m9 12 2 2 4-4.2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3.4-2.4 1a8 8 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.6A8 8 0 0 0 7 6.6l-2.4-1-2 3.4 2 1.5a7.8 7.8 0 0 0 0 3l-2 1.5 2 3.4 2.4-1a8 8 0 0 0 2.6 1.5l.4 2.6h4l.4-2.6a8 8 0 0 0 2.6-1.5l2.4 1 2-3.4-2-1.5Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9.8a6 6 0 1 0-12 0c0 4.2-1.6 5.6-1.6 5.6h15.2S18 14 18 9.8Z"/><path d="M9.7 19a2.5 2.5 0 0 0 4.6 0"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.8 12h2M19.2 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4.5M7.8 8.2 12 4l4.2 4.2"/><path d="M4 14.5v3A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5v-3"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8.5V6.3A2.3 2.3 0 0 1 6.3 4h2.2M15.5 4h2.2A2.3 2.3 0 0 1 20 6.3v2.2M20 15.5v2.2a2.3 2.3 0 0 1-2.3 2.3h-2.2M8.5 20H6.3A2.3 2.3 0 0 1 4 17.7v-2.2M7.5 12h9"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z"/><path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5.5h16l-6.2 7.4v5.3l-3.6 1.8v-7.1L4 5.5Z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11.5M7.8 11.3 12 15.5l4.2-4.2"/><path d="M4.5 17.5v1A2.5 2.5 0 0 0 7 21h10a2.5 2.5 0 0 0 2.5-2.5v-1"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 6.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.6 21 20H3l9-16.4Z"/><path d="M12 9v4.5M12 17h.01"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7.2c0-1 .8-1.8 1.8-1.8h4.2l2 2.4h7.2c1 0 1.8.8 1.8 1.8v7.9c0 1-.8 1.8-1.8 1.8H5.3c-1 0-1.8-.8-1.8-1.8V7.2Z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3.8h6.4l4.6 4.6v11.8H7V3.8Z"/><path d="M13.2 3.8v4.8h4.8"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.4"/><circle cx="9" cy="10" r="1.5"/><path d="m4.5 17 4.7-4.4 3.1 2.9 3-2.7 4.2 4.2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.2" width="14" height="10" rx="2.2"/><path d="M8.2 10.2V7.8a3.8 3.8 0 0 1 7.6 0v2.4M12 14.2v2.4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.8 12S6 6.2 12 6.2 21.2 12 21.2 12 18 17.8 12 17.8 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 1-4.2L16.2 4.6a2 2 0 0 1 2.9 0l.3.3a2 2 0 0 1 0 2.9L8.2 19 4 20Z"/><path d="m14.5 6.3 3.2 3.2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 5h6v6M19 5l-8 8"/><path d="M18 14v3.5A2.5 2.5 0 0 1 15.5 20H6.5A2.5 2.5 0 0 1 4 17.5v-9A2.5 2.5 0 0 1 6.5 6H10"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.7 12h16.6M12 3.5c2.2 2.3 3.3 5.2 3.3 8.5S14.2 18.2 12 20.5C9.8 18.2 8.7 15.3 8.7 12S9.8 5.8 12 3.5Z"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 8l-4 4 4 4M6 12h9"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="4.5" rx="1.4"/><path d="M5 8.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19V8.5M10 12.5h4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="M9.7 9.2a2.4 2.4 0 0 1 4.7.6c0 1.7-2.4 2-2.4 3.8M12 17.1h.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m4.5 12 7.5 4 7.5-4M4.5 16.5l7.5 4 7.5-4"/></symbol>
+  </svg>
+
+  <div class="app">
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar" aria-label="التنقل الرئيسي">
+      <div class="brand">
+        <a class="brand-link" href="../index.html" aria-label="Archifex — العودة إلى الموقع">
+          <img class="brand-mark" src="../assets/logo-mark.svg" alt="" width="42" height="42" />
+          <span class="brand-text">
+            <span class="brand-ar">أرشيفكس</span>
+            <span class="brand-en">ARCHIFEX</span>
+          </span>
+        </a>
+        <button class="icon-btn sidebar-close" id="sidebarClose" data-i18n-aria="a11y.close" aria-label="إغلاق">
+          <svg class="ic"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <button class="workspace" id="workspaceBtn" type="button">
+        <span class="workspace-avatar"><svg class="ic"><use href="#i-graduation"/></svg></span>
+        <span class="workspace-meta">
+          <span class="workspace-name" id="workspaceName">جامعة النور</span>
+          <span class="workspace-type" id="workspaceType">بيئة تعليمية</span>
+        </span>
+        <svg class="ic workspace-chevron"><use href="#i-chevron-down"/></svg>
+      </button>
+
+      <nav class="nav" aria-label="أقسام النظام">
+        <div class="nav-group">
+          <p class="nav-title" data-i18n="nav.group.main">الفضاء العام</p>
+          <a class="nav-item is-active" href="#dashboard" data-view="dashboard" aria-current="page">
+            <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="nav.dashboard">لوحة التحكم</span>
+          </a>
+          <a class="nav-item" href="#documents" data-view="documents">
+            <svg class="ic"><use href="#i-files"/></svg><span data-i18n="nav.documents">المستندات</span>
+            <span class="nav-badge">24.8k</span>
+          </a>
+          <a class="nav-item" href="#search" data-view="search">
+            <svg class="ic"><use href="#i-search"/></svg><span data-i18n="nav.search">البحث الذكي</span>
+            <span class="nav-kbd">/</span>
+          </a>
+          <a class="nav-item" href="#workflows" data-view="workflows">
+            <svg class="ic"><use href="#i-workflow"/></svg><span data-i18n="nav.workflows">سير العمل والتوقيع</span>
+            <span class="nav-dot" aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div class="nav-group">
+          <p class="nav-title" data-i18n="nav.group.library">المكتبة</p>
+          <a class="nav-item" href="#categories" data-view="categories">
+            <svg class="ic"><use href="#i-tag"/></svg><span data-i18n="nav.categories">التصنيفات</span>
+          </a>
+          <a class="nav-item" href="#entities" data-view="entities">
+            <svg class="ic"><use href="#i-graduation" id="entitiesIcon"/></svg><span id="entitiesLabel">الطلاب</span>
+          </a>
+          <a class="nav-item" href="#projects" data-view="projects">
+            <svg class="ic"><use href="#i-layers"/></svg><span data-i18n="nav.projects">المشاريع والأقسام</span>
+          </a>
+          <a class="nav-item" href="#cold" data-view="cold">
+            <svg class="ic"><use href="#i-archive"/></svg><span data-i18n="nav.cold">الأرشيف البارد</span>
+          </a>
+        </div>
+
+        <div class="nav-group">
+          <p class="nav-title" data-i18n="nav.group.gov">الحوكمة</p>
+          <a class="nav-item" href="#users" data-view="users">
+            <svg class="ic"><use href="#i-shield"/></svg><span data-i18n="nav.users">المستخدمون والصلاحيات</span>
+          </a>
+          <a class="nav-item" href="#audit" data-view="audit">
+            <svg class="ic"><use href="#i-eye"/></svg><span data-i18n="nav.audit">سجل المراجعة</span>
+          </a>
+          <a class="nav-item" href="#settings" data-view="settings">
+            <svg class="ic"><use href="#i-settings"/></svg><span data-i18n="nav.settings">الإعدادات</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="storage-card">
+        <div class="storage-head">
+          <span class="storage-icon"><svg class="ic"><use href="#i-database"/></svg></span>
+          <span data-i18n="storage.title">مساحة التخزين</span>
+          <span class="storage-pct">68%</span>
+        </div>
+        <div class="storage-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"><span style="width:68%"></span></div>
+        <p class="storage-meta"><span data-i18n="storage.used">1.36 TB من 2 TB</span></p>
+        <button class="storage-link" type="button" id="upgradeBtn">
+          <span data-i18n="storage.upgrade">ترقية الخطة</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-user">
+        <span class="avatar avatar-sm" id="sidebarUserAvatar">SA</span>
+        <span class="sidebar-user-meta">
+          <span class="sidebar-user-name" id="sidebarUserName">سارة العتيبي</span>
+          <span class="sidebar-user-role" id="sidebarUserRole" data-i18n="user.role">مديرة النظام</span>
+        </span>
+        <button class="icon-btn" type="button" id="logoutBtn" data-i18n-aria="a11y.logout" aria-label="تسجيل الخروج">
+          <svg class="ic"><use href="#i-logout"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" data-i18n-aria="a11y.menu" aria-label="القائمة">
+          <svg class="ic"><use href="#i-menu"/></svg>
+        </button>
+
+        <button class="global-search" id="globalSearchBtn" type="button">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <span data-i18n="top.search">ابحث في المستندات والمحتوى والأشخاص…</span>
+          <kbd>⌘ K</kbd>
+        </button>
+
+        <div class="topbar-actions">
+          <button class="btn btn-primary top-upload" id="topUploadBtn" type="button">
+            <svg class="ic"><use href="#i-upload"/></svg>
+            <span data-i18n="top.upload">رفع مستند</span>
+          </button>
+
+          <button class="lang-btn" id="langToggle" type="button" aria-label="Switch language" title="العربية / English">
+            <svg class="ic"><use href="#i-globe"/></svg>
+            <span id="langLabel">EN</span>
+          </button>
+
+          <button class="icon-btn" id="themeToggle" type="button" data-i18n-aria="a11y.theme" aria-label="تبديل المظهر">
+            <svg class="ic theme-icon-moon"><use href="#i-moon"/></svg>
+            <svg class="ic theme-icon-sun"><use href="#i-sun"/></svg>
+          </button>
+
+          <div class="popover-wrap">
+            <button class="icon-btn" id="bellBtn" type="button" data-i18n-aria="a11y.notifications" aria-label="الإشعارات" aria-expanded="false">
+              <svg class="ic"><use href="#i-bell"/></svg>
+              <span class="bell-dot" id="bellDot"></span>
+            </button>
+            <div class="popover notif-menu" id="notifMenu" hidden>
+              <div class="popover-head">
+                <strong data-i18n="notif.title">الإشعارات</strong>
+                <button type="button" class="text-btn" id="markRead" data-i18n="notif.mark">تحديد الكل كمقروء</button>
+              </div>
+              <div class="notif-list">
+                <button class="notif-item is-unread" type="button" data-notif="1">
+                  <span class="notif-ico success"><svg class="ic"><use href="#i-check"/></svg></span>
+                  <span class="notif-body">
+                    <span class="notif-title" data-i18n="notif.1.title">تم اعتماد عقد الخدمة SLA</span>
+                    <span class="notif-sub" data-i18n="notif.1.sub">وقّعه د. خالد — شركة أفق التقنية</span>
+                    <span class="notif-time" data-i18n="notif.1.time">منذ 5 دقائق</span>
+                  </span>
+                </button>
+                <button class="notif-item is-unread" type="button" data-notif="2">
+                  <span class="notif-ico ai"><svg class="ic"><use href="#i-sparkles"/></svg></span>
+                  <span class="notif-body">
+                    <span class="notif-title" data-i18n="notif.2.title">اكتمل استخراج بيانات 12 مستندًا</span>
+                    <span class="notif-sub" data-i18n="notif.2.sub">ثقة متوسطة 97.4% — جاهزة للمراجعة</span>
+                    <span class="notif-time" data-i18n="notif.2.time">منذ 22 دقيقة</span>
+                  </span>
+                </button>
+                <button class="notif-item" type="button" data-notif="3">
+                  <span class="notif-ico warn"><svg class="ic"><use href="#i-pen"/></svg></span>
+                  <span class="notif-body">
+                    <span class="notif-title" data-i18n="notif.3.title">طلب توقيع بانتظارك</span>
+                    <span class="notif-sub" data-i18n="notif.3.sub">محضر مجلس القسم — كلية الهندسة</span>
+                    <span class="notif-time" data-i18n="notif.3.time">منذ ساعة</span>
+                  </span>
+                </button>
+              </div>
+              <button class="popover-foot" type="button" id="allNotificationsBtn">
+                <span data-i18n="notif.all">عرض كل الإشعارات</span>
+                <svg class="ic"><use href="#i-arrow"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="avatar avatar-btn" id="profileBtn" type="button" aria-label="الحساب" aria-expanded="false">SA</button>
+
+          <div class="popover profile-menu" id="profileMenu" hidden>
+            <div class="profile-head">
+              <span class="avatar" id="profileAvatar">SA</span>
+              <span class="profile-meta">
+                <strong id="profileName">سارة العتيبي</strong>
+                <small id="profileEmail">demo@archifex.sa</small>
+              </span>
+            </div>
+            <div class="profile-workspace">
+              <span class="workspace-avatar"><svg class="ic"><use href="#i-graduation"/></svg></span>
+              <span class="profile-meta"><strong id="profileOrg">جامعة النور</strong><small id="profileRole">مديرة النظام</small></span>
+            </div>
+            <div class="profile-links">
+              <button type="button" id="profileSettings"><svg class="ic"><use href="#i-settings"/></svg><span data-i18n="profile.settings">إعدادات الحساب</span></button>
+              <button type="button" id="profileTheme"><svg class="ic"><use href="#i-moon"/></svg><span data-i18n="profile.theme">تبديل المظهر</span></button>
+              <button type="button" id="profileLogout"><svg class="ic"><use href="#i-logout"/></svg><span data-i18n="a11y.logout">تسجيل الخروج</span></button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="main">
+        <div class="view" id="dashboardView">
+        <section class="page-head">
+          <div class="page-head-text">
+            <div class="eyebrow">
+              <span data-i18n="page.eyebrow">لوحة التحكم</span>
+              <span class="eyebrow-sep"></span>
+              <span id="pageDate">الثلاثاء، 20 أكتوبر 2026</span>
+            </div>
+            <h1><span data-i18n="page.greeting">مرحبًا بعودتك، سارة</span></h1>
+            <p data-i18n="page.subtitle">إليك نظرة سريعة على أرشيف مؤسستك اليوم. هناك 18 مستندًا بانتظار الاعتماد.</p>
+          </div>
+          <div class="page-head-actions">
+            <div class="segmented" role="group" aria-label="نوع المؤسسة">
+              <button class="seg-btn is-active" type="button" data-sector="edu">
+                <svg class="ic"><use href="#i-graduation"/></svg>
+                <span data-i18n="sector.edu">تعليمي</span>
+              </button>
+              <button class="seg-btn" type="button" data-sector="corp">
+                <svg class="ic"><use href="#i-building"/></svg>
+                <span data-i18n="sector.corp">مؤسسي</span>
+              </button>
+            </div>
+            <button class="btn btn-ghost" id="scanBtn" type="button">
+              <svg class="ic"><use href="#i-scan"/></svg>
+              <span data-i18n="page.scan">مسح ضوئي</span>
+            </button>
+            <button class="btn btn-primary" id="pageUploadBtn" type="button">
+              <svg class="ic"><use href="#i-plus"/></svg>
+              <span data-i18n="page.upload">مستند جديد</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- KPI -->
+        <section class="kpi-grid" aria-label="المؤشرات الرئيسية">
+          <article class="card kpi">
+            <div class="kpi-head">
+              <span class="kpi-label" data-i18n="kpi.docs">إجمالي المستندات</span>
+              <span class="kpi-icon"><svg class="ic"><use href="#i-files"/></svg></span>
+            </div>
+            <div class="kpi-value-row">
+              <strong class="kpi-value" id="kpiDocs">24,860</strong>
+              <span class="delta up"><svg class="ic"><use href="#i-arrow"/></svg><span id="kpiDocsDelta">12.4%</span></span>
+            </div>
+            <p class="kpi-sub" data-i18n="kpi.docs.sub">+1,240 هذا الشهر</p>
+            <svg class="spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="sparkFill1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9EBF0" stop-opacity=".22"/><stop offset="1" stop-color="#E9EBF0" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0 32 L12 28 L24 30 L36 22 L48 24 L60 17 L72 19 L84 12 L96 15 L108 8 L120 10 L120 40 L0 40 Z" fill="url(#sparkFill1)"/>
+              <path d="M0 32 L12 28 L24 30 L36 22 L48 24 L60 17 L72 19 L84 12 L96 15 L108 8 L120 10" fill="none" stroke="#D9DCE3" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </article>
+
+          <article class="card kpi">
+            <div class="kpi-head">
+              <span class="kpi-label" data-i18n="kpi.pending">بانتظار الاعتماد</span>
+              <span class="kpi-icon warn"><svg class="ic"><use href="#i-clock"/></svg></span>
+            </div>
+            <div class="kpi-value-row">
+              <strong class="kpi-value" id="kpiPending">18</strong>
+              <span class="chip chip-amber" data-i18n="kpi.pending.badge">5 عاجلة</span>
+            </div>
+            <p class="kpi-sub" data-i18n="kpi.pending.sub">متوسط زمن الاعتماد: 1.4 يوم</p>
+            <div class="kpi-mini-bars" aria-hidden="true">
+              <span style="height:38%"></span><span style="height:62%"></span><span style="height:46%"></span><span style="height:80%"></span><span style="height:55%"></span><span style="height:72%"></span><span style="height:90%"></span><span style="height:64%"></span>
+            </div>
+          </article>
+
+          <article class="card kpi">
+            <div class="kpi-head">
+              <span class="kpi-label" data-i18n="kpi.ai">دقة الاستخراج الذكي</span>
+              <span class="kpi-icon ai"><svg class="ic"><use href="#i-sparkles"/></svg></span>
+            </div>
+            <div class="kpi-value-row">
+              <strong class="kpi-value" id="kpiAccuracy">98.2%</strong>
+              <span class="delta up"><svg class="ic"><use href="#i-arrow"/></svg><span>+1.8</span></span>
+            </div>
+            <p class="kpi-sub" data-i18n="kpi.ai.sub">عربي + إنجليزي · آخر 30 يومًا</p>
+            <div class="confidence-track" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"><span style="width:98%"></span></div>
+          </article>
+
+          <article class="card kpi">
+            <div class="kpi-head">
+              <span class="kpi-label" data-i18n="kpi.storage">المساحة المستخدمة</span>
+              <span class="kpi-icon"><svg class="ic"><use href="#i-database"/></svg></span>
+            </div>
+            <div class="kpi-value-row">
+              <strong class="kpi-value" id="kpiStorage">68%</strong>
+              <span class="chip" data-i18n="kpi.storage.badge">الخطة الاحترافية</span>
+            </div>
+            <p class="kpi-sub" data-i18n="kpi.storage.sub">1.36 TB من أصل 2 TB</p>
+            <div class="storage-track" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"><span style="width:68%"></span></div>
+          </article>
+        </section>
+
+        <!-- MAIN GRID -->
+        <div class="dashboard-grid">
+          <div class="col-main">
+            <!-- CHART -->
+            <section class="card chart-card">
+              <header class="card-head">
+                <div>
+                  <h2 data-i18n="chart.title">نشاط الأرشفة</h2>
+                  <p data-i18n="chart.sub">المستندات المرفوعة مقابل المعالجة آليًا</p>
+                </div>
+                <div class="chart-controls">
+                  <div class="range-tabs" role="group" aria-label="المدة">
+                    <button class="range-btn is-active" type="button" data-range="7">7 <span data-i18n="chart.days">أيام</span></button>
+                    <button class="range-btn" type="button" data-range="30">30 <span data-i18n="chart.day">يومًا</span></button>
+                    <button class="range-btn" type="button" data-range="12">12 <span data-i18n="chart.month">شهرًا</span></button>
+                  </div>
+                </div>
+              </header>
+              <div class="chart-legend">
+                <span class="legend-item"><i class="legend-dot dot-upload"></i><span data-i18n="chart.uploaded">تم رفعها</span></span>
+                <span class="legend-item"><i class="legend-dot dot-process"></i><span data-i18n="chart.processed">معالجة آليًا</span></span>
+                <span class="chart-summary" id="chartSummary">1,240 مستندًا هذا الأسبوع</span>
+              </div>
+              <div class="chart-wrap">
+                <svg id="activityChart" viewBox="0 0 760 260" preserveAspectRatio="none" role="img" aria-label="مخطط نشاط الأرشفة"></svg>
+              </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="card table-card">
+              <header class="card-head table-head">
+                <div>
+                  <h2 data-i18n="table.title">أحدث المستندات</h2>
+                  <p data-i18n="table.sub">مرتبة حسب آخر نشاط</p>
+                </div>
+                <div class="table-tools">
+                  <label class="mini-search">
+                    <svg class="ic"><use href="#i-search"/></svg>
+                    <input type="search" id="tableSearch" data-i18n-ph="table.search" placeholder="بحث سريع…" />
+                  </label>
+                  <button class="icon-btn bordered" type="button" id="tableFilterBtn" data-i18n-aria="table.filter" aria-label="تصفية">
+                    <svg class="ic"><use href="#i-filter"/></svg>
+                  </button>
+                  <button class="icon-btn bordered" type="button" id="tableExportBtn" data-i18n-aria="table.export" aria-label="تصدير">
+                    <svg class="ic"><use href="#i-download"/></svg>
+                  </button>
+                </div>
+              </header>
+
+              <div class="table-tabs" role="tablist">
+                <button class="tab is-active" type="button" data-filter="all" role="tab" aria-selected="true" data-i18n="table.tab.all">الكل</button>
+                <button class="tab" type="button" data-filter="pending" role="tab" aria-selected="false"><span data-i18n="table.tab.pending">بانتظار الاعتماد</span><span class="tab-count">18</span></button>
+                <button class="tab" type="button" data-filter="signed" role="tab" aria-selected="false" data-i18n="table.tab.signed">موقّع</button>
+                <button class="tab" type="button" data-filter="approved" role="tab" aria-selected="false" data-i18n="table.tab.approved">معتمد</button>
+              </div>
+
+              <div class="table-wrap">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th class="th-check"><input type="checkbox" id="selectAll" aria-label="تحديد الكل" /></th>
+                      <th data-i18n="table.col.doc">المستند</th>
+                      <th data-i18n="table.col.category">التصنيف</th>
+                      <th data-i18n="table.col.linked">مرتبط بـ</th>
+                      <th data-i18n="table.col.owner">المسؤول</th>
+                      <th data-i18n="table.col.date">التاريخ</th>
+                      <th data-i18n="table.col.status">الحالة</th>
+                      <th class="th-actions"><span class="sr-only">إجراءات</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBody"></tbody>
+                </table>
+                <div class="empty-state" id="emptyState" hidden>
+                  <svg class="ic"><use href="#i-search"/></svg>
+                  <p data-i18n="table.empty">لا توجد مستندات مطابقة</p>
+                </div>
+              </div>
+
+              <footer class="table-foot">
+                <span id="tableCount">عرض 6 من 24,860 مستندًا</span>
+                <div class="pager">
+                  <button class="icon-btn bordered" type="button" id="prevPageBtn" aria-label="السابق"><svg class="ic flip-x"><use href="#i-chevron"/></svg></button>
+                  <span class="pager-num" id="pagerNum">1 / 1</span>
+                  <button class="icon-btn bordered" type="button" id="nextPageBtn" aria-label="التالي"><svg class="ic"><use href="#i-chevron"/></svg></button>
+                </div>
+              </footer>
+            </section>
+          </div>
+
+          <!-- RAIL -->
+          <aside class="col-rail">
+            <!-- AI -->
+            <section class="card ai-card">
+              <header class="ai-head">
+                <span class="ai-orb"><svg class="ic"><use href="#i-sparkles"/></svg></span>
+                <div class="ai-head-text">
+                  <h2><span data-i18n="ai.title">مساعد الأرشيف</span><span class="ai-badge">AI</span></h2>
+                  <p data-i18n="ai.sub">اسأل أرشيفك بلغتك الطبيعية</p>
+                </div>
+              </header>
+              <form class="ai-form" id="aiForm">
+                <svg class="ic ai-form-ico"><use href="#i-sparkles"/></svg>
+                <input id="aiInput" type="text" data-i18n-ph="ai.placeholder" placeholder="ما مدة الإشعار في عقد الخدمة؟" autocomplete="off" />
+                <button type="submit" class="ai-send" data-i18n-aria="ai.send" aria-label="إرسال">
+                  <svg class="ic"><use href="#i-arrow"/></svg>
+                </button>
+              </form>
+              <div class="ai-suggestions" id="aiSuggestions"></div>
+              <div class="ai-answer" id="aiAnswer">
+                <div class="ai-answer-top">
+                  <span class="ai-answer-label"><svg class="ic"><use href="#i-sparkles"/></svg><span data-i18n="ai.answerLabel">إجابة موثّقة</span></span>
+                  <span class="ai-confidence">96%</span>
+                </div>
+                <p class="ai-answer-text" id="aiAnswerText"></p>
+                <div class="ai-sources" id="aiSources"></div>
+                <a href="#search" class="ai-open" id="aiOpenSearch">
+                  <span data-i18n="ai.open">فتح البحث الدلالي</span>
+                  <svg class="ic"><use href="#i-arrow"/></svg>
+                </a>
+              </div>
+            </section>
+
+            <!-- WORKFLOW -->
+            <section class="card workflow-card">
+              <header class="card-head compact">
+                <div>
+                  <h2 data-i18n="workflow.title">بحاجة إلى توقيعك</h2>
+                  <p data-i18n="workflow.sub">2 من 3 مستندات</p>
+                </div>
+                <span class="chip chip-silver" data-i18n="workflow.badge">عاجل</span>
+              </header>
+              <div class="workflow-progress"><span style="width:66%"></span></div>
+              <div class="workflow-list" id="workflowList"></div>
+              <button class="btn btn-soft full" type="button" id="openSigningBtn">
+                <span data-i18n="workflow.open">فتح مركز التوقيع</span>
+                <svg class="ic"><use href="#i-arrow"/></svg>
+              </button>
+            </section>
+
+            <!-- AUDIT -->
+            <section class="card audit-card">
+              <header class="card-head compact">
+                <div>
+                  <h2 data-i18n="audit.title">سجل النشاط</h2>
+                  <p data-i18n="audit.sub">آخر العمليات على الأرشيف</p>
+                </div>
+                <button class="icon-btn" type="button" id="openAuditBtn" data-i18n-aria="audit.all" aria-label="عرض الكل">
+                  <svg class="ic"><use href="#i-external"/></svg>
+                </button>
+              </header>
+              <div class="audit-list" id="auditList"></div>
+              <button class="text-btn audit-link" type="button" id="auditLink">
+                <span data-i18n="audit.open">عرض سجل المراجعة الكامل</span>
+                <svg class="ic"><use href="#i-arrow"/></svg>
+              </button>
+            </section>
+
+            <!-- CATEGORIES -->
+            <section class="card categories-card">
+              <header class="card-head compact">
+                <div>
+                  <h2 data-i18n="cat.title">توزيع التصنيفات</h2>
+                  <p data-i18n="cat.sub">أعلى 5 تصنيفات هذا الشهر</p>
+                </div>
+              </header>
+              <div class="cat-list" id="catList"></div>
+            </section>
+          </aside>
+        </div>
+        </div>
+
+        <div class="view app-view" id="appView" hidden></div>
+
+        <footer class="page-foot">
+          <span>© 2026 Archifex · <span data-i18n="footer.tagline">الأرشيف الذي يفكّر</span></span>
+          <span class="foot-links">
+            <a href="#help" id="helpLink" data-i18n="footer.help">المساعدة</a>
+            <a href="#privacy" id="privacyLink" data-i18n="footer.privacy">الخصوصية</a>
+            <span class="foot-version">v0.9 · <span data-i18n="footer.demo">نموذج تفاعلي</span></span>
+          </span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= DRAWER ================= -->
+  <div class="overlay" id="drawerOverlay" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+    <header class="drawer-head">
+      <div class="drawer-file">
+        <span class="file-badge pdf" id="drawerFileBadge"><svg class="ic"><use href="#i-file"/></svg><em>PDF</em></span>
+        <div class="drawer-title-wrap">
+          <h2 id="drawerTitle">—</h2>
+          <p id="drawerMeta">—</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="drawerClose" data-i18n-aria="a11y.close" aria-label="إغلاق">
+        <svg class="ic"><use href="#i-close"/></svg>
+      </button>
+    </header>
+
+    <div class="drawer-status">
+      <span id="drawerStatus" class="status-chip">—</span>
+      <span class="drawer-status-sep"></span>
+      <span class="drawer-lock"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="drawer.internal">داخلي</span></span>
+      <span class="drawer-actions">
+        <button class="icon-btn bordered" type="button" id="drawerDownloadBtn" data-i18n-aria="drawer.download" aria-label="تنزيل"><svg class="ic"><use href="#i-download"/></svg></button>
+        <button class="icon-btn bordered" type="button" id="drawerMoreBtn" data-i18n-aria="drawer.more" aria-label="المزيد"><svg class="ic"><use href="#i-more"/></svg></button>
+      </span>
+    </div>
+
+    <div class="drawer-tabs" role="tablist">
+      <button class="dtab is-active" type="button" data-dtab="overview" data-i18n="drawer.tab.overview">نظرة عامة</button>
+      <button class="dtab" type="button" data-dtab="content" data-i18n="drawer.tab.content">المحتوى</button>
+      <button class="dtab" type="button" data-dtab="audit" data-i18n="drawer.tab.audit">سجل المراجعة</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="dpanel is-active" data-dpanel="overview">
+        <div class="paper" aria-label="معاينة المستند">
+          <div class="paper-head">
+            <div class="paper-seal">AF</div>
+            <div>
+              <strong id="paperEntity">جامعة النور</strong>
+              <span id="paperDept">عمادة شؤون الطلاب</span>
+            </div>
+            <span class="paper-ref">REF 2026/447</span>
+          </div>
+          <div class="paper-title" id="paperTitle">شهادة تخرج</div>
+          <div class="paper-lines">
+            <span style="width:92%"></span><span style="width:78%"></span><span style="width:86%"></span>
+            <span style="width:64%"></span><span style="width:88%"></span><span style="width:42%"></span>
+          </div>
+          <div class="paper-foot">
+            <div class="paper-sign">
+              <span class="paper-sign-line"></span>
+              <small data-i18n="drawer.signature">التوقيع المعتمد</small>
+            </div>
+            <div class="paper-stamp"><span data-i18n="drawer.approved">معتمد</span><small>ARCHIFEX</small></div>
+          </div>
+          <div class="paper-scan"><span></span><span></span><span></span></div>
+        </div>
+
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <h3><svg class="ic"><use href="#i-sparkles"/></svg><span data-i18n="drawer.aiFields">البيانات المستخرجة آليًا</span></h3>
+            <span class="chip chip-silver">5 <span data-i18n="drawer.fields">حقول</span></span>
+          </div>
+          <div class="field-list" id="fieldList"></div>
+          <p class="ai-note"><svg class="ic"><use href="#i-shield"/></svg><span data-i18n="drawer.aiNote">راجع الحقول منخفضة الثقة قبل الاعتماد النهائي.</span></p>
+        </section>
+
+        <section class="drawer-section">
+          <h3 data-i18n="drawer.links">الروابط والبيانات الوصفية</h3>
+          <dl class="meta-grid" id="metaGrid"></dl>
+          <div class="tag-row" id="tagRow"></div>
+        </section>
+      </div>
+
+      <div class="dpanel" data-dpanel="content">
+        <div class="ocr-head">
+          <div>
+            <h3 data-i18n="drawer.ocr">النص المستخرج (OCR)</h3>
+            <p data-i18n="drawer.ocrSub">عربي · إنجليزي · 4 صفحات</p>
+          </div>
+          <span class="chip chip-silver">99.1%</span>
+        </div>
+        <div class="ocr-box" id="ocrBox"></div>
+        <div class="ocr-actions">
+          <button class="btn btn-ghost" type="button" id="drawerCopyBtn"><svg class="ic"><use href="#i-files"/></svg><span data-i18n="drawer.copy">نسخ النص</span></button>
+          <button class="btn btn-ghost" type="button" id="drawerOcrBtn"><svg class="ic"><use href="#i-scan"/></svg><span data-i18n="drawer.rerun">إعادة المعالجة</span></button>
+        </div>
+      </div>
+
+      <div class="dpanel" data-dpanel="audit">
+        <div class="timeline" id="drawerTimeline"></div>
+      </div>
+    </div>
+
+    <footer class="drawer-foot">
+      <button class="btn btn-ghost" type="button" id="drawerShareBtn">
+        <svg class="ic"><use href="#i-users"/></svg><span data-i18n="drawer.share">مشاركة</span>
+      </button>
+      <button class="btn btn-primary" type="button" id="drawerSignBtn">
+        <svg class="ic"><use href="#i-pen"/></svg><span data-i18n="drawer.sign">توقيع واعتماد</span>
+      </button>
+    </footer>
+  </aside>
+
+  <!-- ================= UPLOAD MODAL ================= -->
+  <div class="modal-wrap" id="uploadModal" role="dialog" aria-modal="true" aria-labelledby="uploadTitle" hidden>
+    <div class="modal-backdrop" data-close="upload"></div>
+    <div class="modal">
+      <header class="modal-head">
+        <div>
+          <h2 id="uploadTitle" data-i18n="upload.title">رفع مستندات جديدة</h2>
+          <p data-i18n="upload.sub">ستتم المعالجة بالـ OCR والذكاء الاصطناعي تلقائيًا بعد الرفع.</p>
+        </div>
+        <button class="icon-btn" type="button" data-close="upload" data-i18n-aria="a11y.close" aria-label="إغلاق"><svg class="ic"><use href="#i-close"/></svg></button>
+      </header>
+
+      <div class="modal-body">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="اختيار ملفات">
+          <span class="drop-icon"><svg class="ic"><use href="#i-upload"/></svg></span>
+          <strong data-i18n="upload.drop">أفلت الملفات هنا</strong>
+          <span data-i18n="upload.or">أو</span>
+          <span class="drop-browse" data-i18n="upload.browse">تصفّح من جهازك</span>
+          <small data-i18n="upload.types">PDF, JPG, PNG, DOCX · حتى 200 MB لكل ملف</small>
+          <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.docx" hidden />
+        </div>
+        <div class="file-list" id="fileList"></div>
+
+        <div class="form-grid">
+          <label class="field">
+            <span data-i18n="upload.category">التصنيف</span>
+            <select id="uploadCategory">
+              <option data-i18n="cat.academic">السجلات الأكاديمية</option>
+              <option data-i18n="cat.contracts">العقود والاتفاقيات</option>
+              <option data-i18n="cat.invoices">الفواتير والملفات الضريبية</option>
+              <option data-i18n="cat.correspondence">المراسلات الإدارية</option>
+            </select>
+          </label>
+          <label class="field">
+            <span data-i18n="upload.confidentiality">درجة السرية</span>
+            <select id="uploadConfidentiality">
+              <option data-i18n="upload.internal">داخلي</option>
+              <option data-i18n="upload.confidential">سري</option>
+              <option data-i18n="upload.public">عام</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="switch-list">
+          <label class="switch-row">
+            <input type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+            <span><strong data-i18n="upload.ocr">استخراج النص (OCR)</strong><small data-i18n="upload.ocr.sub">عربي + إنجليزي، مع الحفاظ على التنسيق</small></span>
+          </label>
+          <label class="switch-row">
+            <input type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+            <span><strong data-i18n="upload.ai">تصنيف واستخراج ذكي</strong><small data-i18n="upload.ai.sub">اقتراح التصنيف والحقول المفتاحية تلقائيًا</small></span>
+          </label>
+          <label class="switch-row">
+            <input type="checkbox" />
+            <span class="switch-ui" aria-hidden="true"></span>
+            <span><strong data-i18n="upload.notify">إشعار المسؤول</strong><small data-i18n="upload.notify.sub">إرسال تنبيه بعد اكتمال المعالجة</small></span>
+          </label>
+        </div>
+
+        <div class="upload-progress" id="uploadProgress" hidden>
+          <div class="upload-progress-head"><span data-i18n="upload.uploading">جارٍ الرفع والمعالجة…</span><span id="uploadPct">0%</span></div>
+          <div class="progress-track"><span id="uploadBar" style="width:0%"></span></div>
+        </div>
+      </div>
+
+      <footer class="modal-foot">
+        <button class="btn btn-ghost" type="button" data-close="upload" data-i18n="upload.cancel">إلغاء</button>
+        <button class="btn btn-primary" type="button" id="uploadStart">
+          <svg class="ic"><use href="#i-upload"/></svg><span data-i18n="upload.start">بدء الرفع</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ================= COMMAND PALETTE ================= -->
+  <div class="palette-wrap" id="palette" role="dialog" aria-modal="true" aria-labelledby="paletteTitle" hidden>
+    <div class="modal-backdrop" data-close="palette"></div>
+    <div class="palette">
+      <h2 class="sr-only" id="paletteTitle" data-i18n="palette.title">البحث الشامل</h2>
+      <div class="palette-input">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <input id="paletteInput" type="text" data-i18n-ph="palette.placeholder" placeholder="اكتب للبحث في المستندات والمحتوى أو تنفيذ إجراء…" autocomplete="off" />
+        <kbd>Esc</kbd>
+      </div>
+      <div class="palette-body" id="paletteList"></div>
+      <footer class="palette-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="palette.nav">للتنقل</span></span>
+        <span><kbd>↵</kbd> <span data-i18n="palette.open">للفتح</span></span>
+        <span><kbd>Esc</kbd> <span data-i18n="palette.close">للإغلاق</span></span>
+        <span class="palette-brand"><img src="../assets/logo-mark.svg" alt="" width="16" height="16" /> ARCHIFEX</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ================= GENERIC PLATFORM MODAL ================= -->
+  <div class="modal-wrap" id="appModal" role="dialog" aria-modal="true" aria-labelledby="appModalTitle" hidden>
+    <div class="modal-backdrop" data-app-close="modal"></div>
+    <div class="modal app-modal">
+      <header class="modal-head">
+        <div>
+          <h2 id="appModalTitle">—</h2>
+          <p id="appModalSub"></p>
+        </div>
+        <button class="icon-btn" type="button" id="appModalClose" aria-label="إغلاق"><svg class="ic"><use href="#i-close"/></svg></button>
+      </header>
+      <div class="modal-body" id="appModalBody"></div>
+      <footer class="modal-foot" id="appModalFoot"></footer>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="app.js?v=20261021"></script>
+  <script src="platform.js?v=20261021"></script>
+</body>
+</html>

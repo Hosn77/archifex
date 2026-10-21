@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أرشيفكس — الأرشيف الذي يفكّر | منصة أرشفة ذكية</title>
+  <meta name="description" content="أرشيفكس / Archifex — منصة أرشفة وإدارة مستندات ثنائية اللغة للمؤسسات التعليمية والشركات. OCR عربي وإنجليزي، بحث ذكي، استخراج بيانات بالذكاء الاصطناعي، صلاحيات دقيقة، توقيع رقمي، وسجل تدقيق." />
+  <meta name="author" content="Archifex" />
+  <meta name="theme-color" content="#17171C" />
+  <link rel="canonical" href="https://archifex.netlify.app/" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="أرشيفكس / Archifex" />
+  <meta property="og:title" content="أرشيفكس — الأرشيف الذي يفكّر" />
+  <meta property="og:description" content="منصة أرشفة وإدارة مستندات ذكية، ثنائية اللغة، للمؤسسات التعليمية والشركات. OCR، بحث، استخراج AI، حوكمة وتوقيع رقمي." />
+  <meta property="og:url" content="https://archifex.netlify.app/" />
+  <meta property="og:image" content="https://archifex.netlify.app/assets/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ar_SA" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="أرشيفكس — الأرشيف الذي يفكّر" />
+  <meta name="twitter:description" content="منصة أرشفة وإدارة مستندات ذكية، ثنائية اللغة، للمؤسسات التعليمية والشركات." />
+  <meta name="twitter:image" content="https://archifex.netlify.app/assets/og-cover.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        document.documentElement.classList.add('js');
+        const p = new URLSearchParams(location.search);
+        const theme = p.get('theme') || localStorage.getItem('archifex-theme');
+        const lang = p.get('lang') || localStorage.getItem('archifex-lang');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        if (lang === 'ar' || lang === 'en') {
+          document.documentElement.lang = lang;
+          document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/site.css?v=20261020" />
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">تجاوز إلى المحتوى</a>
+
+  <!-- Icon sprite -->
+  <svg class="sr-only" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.8 12h2M19.2 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 6.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.4c0 4.1-2.8 7.4-7 9.4-4.2-2-7-5.3-7-9.4V6l7-2.8Z"/><path d="m9 12 2 2 4-4.2"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8.5V6.3A2.3 2.3 0 0 1 6.3 4h2.2M15.5 4h2.2A2.3 2.3 0 0 1 20 6.3v2.2M20 15.5v2.2a2.3 2.3 0 0 1-2.3 2.3h-2.2M8.5 20H6.3A2.3 2.3 0 0 1 4 17.7v-2.2M7.5 12h9"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z"/><path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.6 19.4c.4-3 2.6-4.8 5.4-4.8s5 1.8 5.4 4.8"/><path d="M16 5.4a3 3 0 0 1 0 5.7M17.4 14.9c1.8.5 3 2 3.2 4.5"/></symbol>
+    <symbol id="i-workflow" viewBox="0 0 24 24"><rect x="3.5" y="4" width="6" height="5" rx="1.6"/><rect x="14.5" y="15" width="6" height="5" rx="1.6"/><path d="M6.5 9v4.2a2.8 2.8 0 0 0 2.8 2.8h5.2"/><path d="M12.6 14.2 14.5 16l-1.9 1.8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="4.5" rx="1.4"/><path d="M5 8.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19V8.5M10 12.5h4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m4.5 12 7.5 4 7.5-4M4.5 16.5l7.5 4 7.5-4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.7 12h16.6M12 3.5c2.2 2.3 3.3 5.2 3.3 8.5S14.2 18.2 12 20.5C9.8 18.2 8.7 15.3 8.7 12S9.8 5.8 12 3.5Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.2" width="14" height="10" rx="2.2"/><path d="M8.2 10.2V7.8a3.8 3.8 0 0 1 7.6 0v2.4M12 14.2v2.4"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></symbol>
+    <symbol id="i-graduation" viewBox="0 0 24 24"><path d="m2.8 9.2 9.2-4.4 9.2 4.4-9.2 4.4-9.2-4.4Z"/><path d="M6.6 11.2v4.2c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.2M21.2 9.2v5.6"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20.5V5.2c0-.9.7-1.7 1.7-1.7h7.1c.9 0 1.7.8 1.7 1.7v15.3M14.5 9.5h3.8c.9 0 1.7.8 1.7 1.7v9.3M2.8 20.5h18.4"/><path d="M7.5 7.5h3M7.5 11h3M7.5 14.5h3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3.8h6.4l4.6 4.6v11.8H7V3.8Z"/><path d="M13.2 3.8v4.8h4.8"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 1-4.2L16.2 4.6a2 2 0 0 1 2.9 0l.3.3a2 2 0 0 1 0 2.9L8.2 19 4 20Z"/><path d="m14.5 6.3 3.2 3.2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 5h6v6M19 5l-8 8"/><path d="M18 14v3.5A2.5 2.5 0 0 1 15.5 20H6.5A2.5 2.5 0 0 1 4 17.5v-9A2.5 2.5 0 0 1 6.5 6H10"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2.5 2.2 6.3 6.3 2.2-6.3 2.2L12 19.5l-2.2-6.3L3.5 11l6.3-2.2L12 2.5Z"/></symbol>
+  </svg>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Archifex / أرشيفكس">
+        <img src="assets/logo-mark.svg" alt="" width="38" height="38" />
+        <span class="brand-text">
+          <span class="brand-ar">أرشيفكس</span>
+          <span class="brand-en">ARCHIFEX</span>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="التنقل الرئيسي" data-i18n-aria="a11y.mainnav">
+        <a href="#platform" data-i18n="nav.platform">المنصة</a>
+        <a href="#sectors" data-i18n="nav.sectors">القطاعات</a>
+        <a href="#security" data-i18n="nav.security">الأمان</a>
+        <a href="#roadmap" data-i18n="nav.roadmap">خارطة الطريق</a>
+        <a href="#docs" data-i18n="nav.docs">الوثائق</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل المظهر" data-i18n-aria="a11y.theme">
+          <svg class="ic" id="themeIcon"><use href="#i-moon"/></svg>
+        </button>
+        <button class="lang-btn" id="langBtn" type="button" aria-label="تبديل اللغة" data-i18n-aria="a11y.lang">EN</button>
+        <a class="btn btn--primary btn--sm header-cta" href="/login/?next=/prototype/" data-i18n="header.demo">ادخل المنصة</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="القائمة" data-i18n-aria="a11y.menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg class="ic"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#platform" data-i18n="nav.platform">المنصة</a>
+    <a href="#sectors" data-i18n="nav.sectors">القطاعات</a>
+    <a href="#security" data-i18n="nav.security">الأمان</a>
+    <a href="#roadmap" data-i18n="nav.roadmap">خارطة الطريق</a>
+    <a href="#docs" data-i18n="nav.docs">الوثائق</a>
+    <a class="btn btn--primary" href="/login/?next=/prototype/" data-i18n="header.demo">ادخل المنصة</a>
+  </div>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="hero-badge">
+              <span class="dot" aria-hidden="true"></span>
+              <span data-i18n="hero.badge">منصة أرشفة ذكية · عربي / إنجليزي</span>
+            </span>
+            <h1>
+              <span class="line" data-i18n="hero.title1">أرشيفك المؤسسي،</span>
+              <span class="line accent" data-i18n="hero.title2">يفكّر معك.</span>
+            </h1>
+            <p class="hero-sub" data-i18n="hero.sub">
+              أرشيفكس يحوّل ملايين المستندات إلى معرفة قابلة للبحث والاعتماد. OCR عربي وإنجليزي، استخراج ذكي للبيانات، وحوكمة كاملة — من أول مسح ضوئي إلى آخر توقيع.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn--primary btn--lg" href="/login/?next=/prototype/">
+                <span data-i18n="hero.cta1">ادخل المنصة التفاعلية</span>
+                <svg class="ic ic--dir"><use href="#i-arrow"/></svg>
+              </a>
+              <a class="btn btn--ghost btn--lg" href="#docs">
+                <svg class="ic"><use href="#i-layers"/></svg>
+                <span data-i18n="hero.cta2">استكشف الوثائق</span>
+              </a>
+            </div>
+            <div class="hero-meta">
+              <span><svg class="ic"><use href="#i-check"/></svg><span data-i18n="hero.meta1">بدون تسجيل</span></span>
+              <span class="sep" aria-hidden="true"></span>
+              <span><svg class="ic"><use href="#i-database"/></svg><span data-i18n="hero.meta2">بيانات تجريبية</span></span>
+              <span class="sep" aria-hidden="true"></span>
+              <span><svg class="ic"><use href="#i-globe"/></svg><span data-i18n="hero.meta3">يعمل على الجوال</span></span>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="shot-frame">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="shot-url"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="hero.shot.url">archifex.app / dashboard</span></span>
+              </div>
+              <img class="shot-img" id="heroShot" src="assets/dashboard-ar-dark.png" alt="لوحة تحكم أرشيفكس — نموذج تفاعلي" width="1440" height="1000" fetchpriority="high" />
+            </div>
+
+            <div class="float-card float-card--a" aria-hidden="true">
+              <span class="fc-icon"><svg class="ic"><use href="#i-sparkles"/></svg></span>
+              <span>
+                <strong data-i18n="hero.float1.title">دقة الاستخراج</strong>
+                <span data-i18n="hero.float1.sub">98.6% · عربي + إنجليزي</span>
+              </span>
+            </div>
+            <div class="float-card float-card--b" aria-hidden="true">
+              <span class="fc-icon"><svg class="ic"><use href="#i-scan"/></svg></span>
+              <span>
+                <strong data-i18n="hero.float2.title">12 مستندًا</strong>
+                <span data-i18n="hero.float2.sub">اكتمل استخراجها</span>
+              </span>
+            </div>
+            <div class="float-card float-card--c" aria-hidden="true">
+              <span class="fc-icon" style="color: var(--green)"><svg class="ic"><use href="#i-pen"/></svg></span>
+              <span>
+                <strong data-i18n="hero.float3.title">توقيع مكتمل</strong>
+                <span data-i18n="hero.float3.sub">عقد خدمة · شركة أفق</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats" role="list">
+          <div class="stat" role="listitem"><strong>98.6%</strong><span data-i18n="stats.1">دقة استخراج تجريبية</span></div>
+          <div class="stat" role="listitem"><strong>AR / EN</strong><span data-i18n="stats.2">OCR أصلي ثنائي اللغة</span></div>
+          <div class="stat" role="listitem"><strong>36</strong><span data-i18n="stats.3">جدولاً في مخطط البيانات</span></div>
+          <div class="stat" role="listitem"><strong>24</strong><span data-i18n="stats.4">أسبوعاً لبناء MVP</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLATFORM / SECTORS ================= -->
+    <section class="section sectors" id="sectors">
+      <div class="container">
+        <div class="section-head section-head--split reveal">
+          <div>
+            <span class="eyebrow" data-i18n="sectors.eyebrow">مصمّم لطبيعة عملك</span>
+            <h2 class="section-title" data-i18n="sectors.title">قطاعان. نظام واحد.</h2>
+          </div>
+          <p class="section-sub" data-i18n="sectors.sub">
+            تعليم يفرض خصوصية سجلات الطلاب وربط الهوية الأكاديمية. وشركات تفرض ربط العقد بالعميل والمشروع والامتثال. أرشيفكس يفهم الفرق، ويوحّد التجربة.
+          </p>
+        </div>
+
+        <div class="reveal" data-delay="1">
+          <div class="segmented" role="tablist" aria-label="اختر القطاع" data-i18n-aria="sectors.tabs.aria">
+            <button type="button" role="tab" id="tabEdu" aria-selected="true" aria-controls="panelEdu" data-sector="edu">
+              <svg class="ic"><use href="#i-graduation"/></svg><span data-i18n="sectors.tab.edu">التعليم</span>
+            </button>
+            <button type="button" role="tab" id="tabCorp" aria-selected="false" aria-controls="panelCorp" data-sector="corp">
+              <svg class="ic"><use href="#i-building"/></svg><span data-i18n="sectors.tab.corp">الشركات</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sector-panel" id="panelEdu" role="tabpanel" aria-labelledby="tabEdu" style="margin-top: 34px">
+          <div class="sector-copy reveal">
+            <span class="sector-kicker">EDUCATION</span>
+            <h3 data-i18n="sectors.edu.title">من ملف الطالب إلى قرار المجلس.</h3>
+            <p data-i18n="sectors.edu.desc">
+              سجلات أكاديمية، شهادات، كشوف درجات، خطابات تكليف، وتعاميم — مرتبطة بالكلية والقسم والبرنامج، مع صلاحيات تمنع الاطلاع غير المصرّح.
+            </p>
+            <ul class="check-list">
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.edu.li1">سجلات الطلاب والهوية الأكاديمية</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.edu.li2">الشهادات وكشوف الدرجات وtranscripts</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.edu.li3">خطابات التكليف والتعاميم الأكاديمية</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.edu.li4">ربط المستند بالكلية والقسم والبرنامج</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.edu.li5">احتفاظ وسجل تدقيق جاهز للاعتماد</span></li>
+            </ul>
+            <a class="sector-link" href="/docs/architecture">
+              <span data-i18n="sectors.edu.link">اقرأ عن نموذج التعليم</span>
+              <svg class="ic ic--dir"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+          <div class="doc-stack reveal" data-delay="1">
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-file"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.edu.doc1.title">سجل طالب — 2025/2026</strong><span data-i18n="sectors.edu.doc1.sub">كلية الهندسة · برنامج الحاسوب</span></span>
+              <span class="doc-status" data-i18n="sectors.edu.doc1.status">مكتمل</span>
+            </div>
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-graduation"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.edu.doc2.title">شهادة تخرج</strong><span data-i18n="sectors.edu.doc2.sub">قسم الهندسة الكهربائية</span></span>
+              <span class="doc-status" data-i18n="sectors.edu.doc2.status">موقّع</span>
+            </div>
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-pen"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.edu.doc3.title">تعميم أكاديمي 44/2026</strong><span data-i18n="sectors.edu.doc3.sub">عمادة القبول والتسجيل</span></span>
+              <span class="doc-status doc-status--amber" data-i18n="sectors.edu.doc3.status">بانتظار الاعتماد</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sector-panel" id="panelCorp" role="tabpanel" aria-labelledby="tabCorp" style="margin-top: 34px" hidden>
+          <div class="sector-copy">
+            <span class="sector-kicker">ENTERPRISE</span>
+            <h3 data-i18n="sectors.corp.title">من العقد إلى التجديد، دون أن يضيع شيء.</h3>
+            <p data-i18n="sectors.corp.desc">
+              عقود واتفاقيات، فواتير وملفات ضريبية، مواصفات مشاريع، SLAs وRFPs — مرتبطة بالعميل والمشروع والقسم، مع سير عمل للاعتماد والتوقيع.
+            </p>
+            <ul class="check-list">
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.corp.li1">العقود والاتفاقيات والملاحق</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.corp.li2">الفواتير والملفات الضريبية</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.corp.li3">مواصفات المشاريع وRFPs</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.corp.li4">SLAs وتجديدات العقود</span></li>
+              <li><span class="ck"><svg class="ic"><use href="#i-check"/></svg></span><span data-i18n="sectors.corp.li5">ربط العميل والمشروع والقسم والاحتفاظ القانوني</span></li>
+            </ul>
+            <a class="sector-link" href="/docs/database">
+              <span data-i18n="sectors.corp.link">اقرأ عن النموذج المؤسسي</span>
+              <svg class="ic ic--dir"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+          <div class="doc-stack">
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-file"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.corp.doc1.title">عقد خدمة — شركة أفق</strong><span data-i18n="sectors.corp.doc1.sub">AFX-2026-0184 · 480,000 ريال</span></span>
+              <span class="doc-status" data-i18n="sectors.corp.doc1.status">موقّع</span>
+            </div>
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-database"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.corp.doc2.title">فاتورة ضريبية — مارس</strong><span data-i18n="sectors.corp.doc2.sub">مشروع بوابة البيانات</span></span>
+              <span class="doc-status" data-i18n="sectors.corp.doc2.status">معتمدة</span>
+            </div>
+            <div class="mini-doc">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-clock"/></svg></span>
+              <span class="doc-meta"><strong data-i18n="sectors.corp.doc3.title">SLA — منصة التشغيل</strong><span data-i18n="sectors.corp.doc3.sub">تجديد Q3 2026</span></span>
+              <span class="doc-status doc-status--blue" data-i18n="sectors.corp.doc3.status">قيد المراجعة</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="section" id="platform">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow" data-i18n="features.eyebrow">القدرات</span>
+          <h2 class="section-title" data-i18n="features.title">كل ما تحتاجه الأرشفة المؤسسية.</h2>
+          <p class="section-sub" data-i18n="features.sub">
+            ليست مساحة تخزين. أرشيفكس يفهم المستند، يستخرج بياناته، يربطه بسياقه، ويحميه بصلاحيات وسجل تدقيق — ثم يجعله قابلاً للبحث في لحظة.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <span class="feature-icon"><svg class="ic"><use href="#i-scan"/></svg></span>
+            <h3 data-i18n="feature.ocr.title">OCR عربي + إنجليزي</h3>
+            <p data-i18n="feature.ocr.desc">نص قابل للبحث من الممسوح والصور، مع الحفاظ على التنسيق الأصلي وثنائية اللغة في المستند الواحد.</p>
+          </article>
+          <article class="feature reveal" data-delay="1">
+            <span class="feature-icon"><svg class="ic"><use href="#i-sparkles"/></svg></span>
+            <h3 data-i18n="feature.ai.title">استخراج ذكي للبيانات</h3>
+            <p data-i18n="feature.ai.desc">حقول وبيانات وصفية مع نسبة ثقة وإحداثيات، وقواعد واضحة للمراجعة البشرية عند انخفاض الثقة.</p>
+          </article>
+          <article class="feature reveal" data-delay="2">
+            <span class="feature-icon"><svg class="ic"><use href="#i-search"/></svg></span>
+            <h3 data-i18n="feature.search.title">بحث شامل</h3>
+            <p data-i18n="feature.search.desc">بحث لغوي ودلالي في النص والميتاداتا والأشخاص، مع تصفية دقيقة بالقسم والتاريخ والنوع.</p>
+          </article>
+          <article class="feature reveal" data-delay="3">
+            <span class="feature-icon"><svg class="ic"><use href="#i-users"/></svg></span>
+            <h3 data-i18n="feature.rbac.title">صلاحيات RBAC</h3>
+            <p data-i18n="feature.rbac.desc">أدوار على مستوى المؤسسة والقسم والمستند، وعزل متعدد المستأجرين عبر RLS في قاعدة البيانات.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="feature-icon"><svg class="ic"><use href="#i-shield"/></svg></span>
+            <h3 data-i18n="feature.audit.title">سجل تدقيق غير قابل للتعديل</h3>
+            <p data-i18n="feature.audit.desc">سجل append-only بسلسلة تجزئة لكل عملية، جاهز للمراجعة الداخلية والامتثال والتحقيق.</p>
+          </article>
+          <article class="feature reveal" data-delay="1">
+            <span class="feature-icon"><svg class="ic"><use href="#i-workflow"/></svg></span>
+            <h3 data-i18n="feature.workflow.title">سير عمل وتوقيع رقمي</h3>
+            <p data-i18n="feature.workflow.desc">اعتماد متعدد المراحل، توقيع رقمي، إشعارات وتصعيد تلقائي عند التأخر — دون بريد متفرق.</p>
+          </article>
+          <article class="feature reveal" data-delay="2">
+            <span class="feature-icon"><svg class="ic"><use href="#i-archive"/></svg></span>
+            <h3 data-i18n="feature.retention.title">احتفاظ وحوكمة</h3>
+            <p data-i18n="feature.retention.desc">سياسات احتفاظ، تعليق قانوني، وأرشفة باردة بتكلفة منخفضة مع استرجاع مضمون.</p>
+          </article>
+          <article class="feature reveal" data-delay="3">
+            <span class="feature-icon"><svg class="ic"><use href="#i-globe"/></svg></span>
+            <h3 data-i18n="feature.bilingual.title">ثنائي اللغة بالكامل</h3>
+            <p data-i18n="feature.bilingual.desc">واجهة RTL/LTR كاملة، ومحتوى عربي وإنجليزي في المستند نفسه، دون ترجمة تفقد المعنى.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORKFLOW ================= -->
+    <section class="section" id="workflow" style="background: var(--bg-2); border-block: 1px solid var(--line)">
+      <div class="container">
+        <div class="workflow-grid">
+          <div class="reveal">
+            <span class="eyebrow" data-i18n="flow.eyebrow">كيف يعمل</span>
+            <h2 class="section-title" data-i18n="flow.title">من المسح الضوئي إلى المعرفة، في أربع خطوات.</h2>
+            <p class="section-sub" data-i18n="flow.sub">
+              خط أنابيب واحد يتعامل مع الرفع، OCR، الاستخراج، التصنيف، المراجعة، التوقيع، والأرشفة — مع حالة واضحة لكل مستند.
+            </p>
+
+            <div class="steps" style="margin-top: 30px">
+              <div class="step is-active">
+                <span class="step-num">01</span>
+                <div>
+                  <h3 data-i18n="flow.s1.title">امسح أو ارفع</h3>
+                  <p data-i18n="flow.s1.desc">سحب وإفلات، ماسح ضوئي، بريد إلكتروني، أو API. المستند يدخل الطابور فوراً.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span class="step-num">02</span>
+                <div>
+                  <h3 data-i18n="flow.s2.title">افهم</h3>
+                  <p data-i18n="flow.s2.desc">OCR عربي وإنجليزي، استخراج حقول وبيانات وصفية، وتصنيف تلقائي حسب النوع والقسم.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span class="step-num">03</span>
+                <div>
+                  <h3 data-i18n="flow.s3.title">راجع واعتمد</h3>
+                  <p data-i18n="flow.s3.desc">مراجعة بشرية للحقول منخفضة الثقة، سير عمل متعدد المراحل، وتوقيع رقمي موثّق.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span class="step-num">04</span>
+                <div>
+                  <h3 data-i18n="flow.s4.title">ابحث وأرشف</h3>
+                  <p data-i18n="flow.s4.desc">بحث فوري في المحتوى والميتاداتا، سياسات احتفاظ، وسجل تدقيق لكل خطوة.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="extract-card reveal" data-delay="1">
+            <div class="extract-head">
+              <span class="doc-thumb"><svg class="ic"><use href="#i-file"/></svg></span>
+              <span>
+                <strong data-i18n="flow.card.title">عقد خدمة — شركة أفق</strong>
+                <span data-i18n="flow.card.sub">AFX-2026-0184 · PDF · 12 صفحة</span>
+              </span>
+              <span class="badge-ai"><svg class="ic" style="width:11px;height:11px"><use href="#i-sparkles"/></svg><span data-i18n="flow.card.ai">استخراج AI</span></span>
+            </div>
+            <div class="field-row">
+              <div><div class="field-label" data-i18n="field.contract">رقم العقد</div><div class="field-value" dir="ltr" style="text-align: start">AFX-2026-0184</div></div>
+              <span class="conf"><span class="conf-bar"><i style="width:99%"></i></span>99%</span>
+            </div>
+            <div class="field-row">
+              <div><div class="field-label" data-i18n="field.start">تاريخ البدء</div><div class="field-value" data-i18n="field.start.value">01 مارس 2026</div></div>
+              <span class="conf"><span class="conf-bar"><i style="width:98%"></i></span>98%</span>
+            </div>
+            <div class="field-row">
+              <div><div class="field-label" data-i18n="field.value">قيمة العقد</div><div class="field-value" data-i18n="field.value.value">480,000 ريال</div></div>
+              <span class="conf"><span class="conf-bar"><i style="width:97%"></i></span>97%</span>
+            </div>
+            <div class="field-row">
+              <div><div class="field-label" data-i18n="field.notice">مدة الإشعار</div><div class="field-value" data-i18n="field.notice.value">30 يومًا</div></div>
+              <span class="conf"><span class="conf-bar"><i style="width:94%"></i></span>94%</span>
+            </div>
+            <div class="extract-foot">
+              <span data-i18n="flow.card.review">4 حقول جاهزة للمراجعة</span>
+              <a class="btn btn--ghost" href="/prototype/?demo=drawer&doc=corp-1">
+                <span data-i18n="flow.card.open">فتح المستند</span>
+                <svg class="ic ic--dir" style="width:13px;height:13px"><use href="#i-arrow"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECURITY ================= -->
+    <section class="section" id="security">
+      <div class="container">
+        <div class="security-panel reveal">
+          <div class="security-copy">
+            <span class="eyebrow" data-i18n="security.eyebrow">الأمان والحوكمة</span>
+            <h2 data-i18n="security.title">الحوكمة ليست إضافة. إنها الأساس.</h2>
+            <p data-i18n="security.desc">
+              صُمم أرشيفكس للمؤسسات التي لا تحتمل فقدان مستند أو تجاوز صلاحية. العزل، التشفير، التدقيق، والاحتفاظ — جزء من التصميم من اليوم الأول.
+            </p>
+            <div class="compliance" aria-label="معايير التصميم">
+              <span>PDPL</span>
+              <span>WCAG 2.1 AA</span>
+              <span>OIDC / SAML</span>
+              <span>AES-256</span>
+              <span>RLS</span>
+            </div>
+            <p class="security-note" data-i18n="security.note">* خارطة الامتثال قيد التنفيذ — هذه معايير تصميم وليست شهادات صادرة.</p>
+          </div>
+          <div class="security-points">
+            <div class="security-point"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="security.p1">عزل متعدد المستأجرين عبر RLS</span></div>
+            <div class="security-point"><svg class="ic"><use href="#i-shield"/></svg><span data-i18n="security.p2">سلسلة تجزئة لسجل التدقيق</span></div>
+            <div class="security-point"><svg class="ic"><use href="#i-users"/></svg><span data-i18n="security.p3">OIDC / SAML مع MFA</span></div>
+            <div class="security-point"><svg class="ic"><use href="#i-layers"/></svg><span data-i18n="security.p4">تشفير أثناء النقل والتخزين</span></div>
+            <div class="security-point"><svg class="ic"><use href="#i-database"/></svg><span data-i18n="security.p5">نسخ احتياطي واستعادة مُختبرة</span></div>
+            <div class="security-point"><svg class="ic"><use href="#i-clock"/></svg><span data-i18n="security.p6">سياسات احتفاظ وتعليق قانوني</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ARCHITECTURE ================= -->
+    <section class="section section--tight" id="architecture">
+      <div class="container">
+        <div class="arch-grid">
+          <div class="arch-copy reveal">
+            <span class="eyebrow" data-i18n="arch.eyebrow">المعمارية</span>
+            <h2 data-i18n="arch.title">تبدأ بسيطة، وتتوسع بثبات.</h2>
+            <p data-i18n="arch.desc">
+              Modular Monolith واضح الحدود، قاعدة بيانات واحدة مع RLS، وطوابير معالجة مستقلة. وعند الحاجة، OpenSearch وخدمات منفصلة — دون إعادة كتابة.
+            </p>
+            <a class="btn btn--ghost" href="/docs/architecture">
+              <svg class="ic"><use href="#i-layers"/></svg>
+              <span data-i18n="arch.cta">اقرأ وثيقة المعمارية</span>
+              <svg class="ic ic--dir"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+          <div class="stack reveal" data-delay="1">
+            <div class="stack-row">
+              <span class="stack-label" data-i18n="arch.label.ui">الواجهة</span>
+              <span class="chips"><span class="chip chip--accent">Next.js 15</span><span class="chip">React 19</span><span class="chip">TypeScript</span><span class="chip">Tailwind</span></span>
+            </div>
+            <div class="stack-row">
+              <span class="stack-label" data-i18n="arch.label.api">الخدمات</span>
+              <span class="chips"><span class="chip chip--accent">NestJS</span><span class="chip">BullMQ</span><span class="chip">Keycloak</span><span class="chip">REST</span></span>
+            </div>
+            <div class="stack-row">
+              <span class="stack-label" data-i18n="arch.label.data">البيانات</span>
+              <span class="chips"><span class="chip chip--accent">PostgreSQL 16</span><span class="chip">pgvector</span><span class="chip">pg_trgm</span><span class="chip">S3</span></span>
+            </div>
+            <div class="stack-row">
+              <span class="stack-label" data-i18n="arch.label.infra">التشغيل</span>
+              <span class="chips"><span class="chip chip--accent">Docker</span><span class="chip">Kubernetes</span><span class="chip">Redis</span><span class="chip">OpenTelemetry</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ROADMAP ================= -->
+    <section class="section" id="roadmap" style="background: var(--bg-2); border-block: 1px solid var(--line)">
+      <div class="container">
+        <div class="section-head section-head--split reveal">
+          <div>
+            <span class="eyebrow" data-i18n="roadmap.eyebrow">خارطة الطريق</span>
+            <h2 class="section-title" data-i18n="roadmap.title">24 أسبوعاً إلى إطلاق تجريبي.</h2>
+          </div>
+          <p class="section-sub" data-i18n="roadmap.sub">
+            نطاق MVP محدد: 6 أنواع مستندات، 3 عملاء تجريبيين، وفريق من 10 أشخاص. كل مرحلة لها بوابة قبول واضحة.
+          </p>
+        </div>
+
+        <div class="roadmap-grid">
+          <article class="phase reveal">
+            <div class="phase-top"><span class="phase-num">01</span><span class="phase-weeks" data-i18n="phase.1.weeks">0–4 أسابيع</span></div>
+            <h3 data-i18n="phase.1.title">الاكتشاف والتأسيس</h3>
+            <p data-i18n="phase.1.desc">ورش مع العملاء، نماذج أولية، عقود البيانات، واختيار المزوّدين.</p>
+            <div class="phase-bar"><i style="width: 17%"></i></div>
+          </article>
+          <article class="phase reveal" data-delay="1">
+            <div class="phase-top"><span class="phase-num">02</span><span class="phase-weeks" data-i18n="phase.2.weeks">5–12 أسبوعاً</span></div>
+            <h3 data-i18n="phase.2.title">النواة</h3>
+            <p data-i18n="phase.2.desc">الرفع، OCR، البحث، الصلاحيات، وسجل التدقيق الأساسي.</p>
+            <div class="phase-bar"><i style="width: 50%"></i></div>
+          </article>
+          <article class="phase phase--active reveal" data-delay="2">
+            <div class="phase-top"><span class="phase-num">03</span><span class="phase-weeks" data-i18n="phase.3.weeks">13–20 أسبوعاً</span></div>
+            <h3 data-i18n="phase.3.title">الذكاء والحوكمة</h3>
+            <p data-i18n="phase.3.desc">الاستخراج الذكي، سير العمل، التوقيع، الاحتفاظ، وتقارير الامتثال.</p>
+            <div class="phase-bar"><i style="width: 82%"></i></div>
+          </article>
+          <article class="phase reveal" data-delay="3">
+            <div class="phase-top"><span class="phase-num">04</span><span class="phase-weeks" data-i18n="phase.4.weeks">21–24 أسبوعاً</span></div>
+            <h3 data-i18n="phase.4.title">الإطلاق التجريبي</h3>
+            <p data-i18n="phase.4.desc">3 عملاء، اختبار أداء وأمن، تدريب، وقياس NPS والاعتماد.</p>
+            <div class="phase-bar"><i style="width: 100%"></i></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DOCS ================= -->
+    <section class="section" id="docs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow" data-i18n="docs.eyebrow">وثائق المشروع</span>
+          <h2 class="section-title" data-i18n="docs.title">التصميم كاملاً، ليس صورة فقط.</h2>
+          <p class="section-sub" data-i18n="docs.sub">
+            حزمة تصميم قابلة للتنفيذ: معمارية، مخطط قاعدة بيانات، نظام هوية وواجهة، وخارطة MVP — مع نموذج تفاعلي حقيقي.
+          </p>
+        </div>
+
+        <div class="docs-grid">
+          <a class="doc-card reveal" href="/docs/architecture">
+            <div class="doc-card-top">
+              <span class="doc-card-num">01</span>
+              <span class="doc-card-icon"><svg class="ic"><use href="#i-layers"/></svg></span>
+            </div>
+            <h3 data-i18n="docs.1.title">المعمارية والنظام</h3>
+            <p data-i18n="docs.1.desc">المكوّنات، خط أنابيب OCR/AI، البحث، التعدد المستأجر، الأمان، النشر، والمراقبة.</p>
+            <div class="doc-card-foot"><span data-i18n="docs.1.meta">4 أقسام · قراءة 12 دقيقة</span><svg class="ic ic--dir"><use href="#i-arrow"/></svg></div>
+          </a>
+          <a class="doc-card reveal" data-delay="1" href="/docs/database">
+            <div class="doc-card-top">
+              <span class="doc-card-num">02</span>
+              <span class="doc-card-icon"><svg class="ic"><use href="#i-database"/></svg></span>
+            </div>
+            <h3 data-i18n="docs.2.title">قاعدة البيانات</h3>
+            <p data-i18n="docs.2.desc">36 جدولاً، ERD، قيود، RLS، فهارس عربية، احتفاظ، ترحيل ونسخ احتياطي.</p>
+            <div class="doc-card-foot"><span data-i18n="docs.2.meta">36 جدولاً · قراءة 15 دقيقة</span><svg class="ic ic--dir"><use href="#i-arrow"/></svg></div>
+          </a>
+          <a class="doc-card reveal" data-delay="2" href="/docs/brand">
+            <div class="doc-card-top">
+              <span class="doc-card-num">03</span>
+              <span class="doc-card-icon"><svg class="ic"><use href="#i-spark"/></svg></span>
+            </div>
+            <h3 data-i18n="docs.3.title">الهوية والواجهة</h3>
+            <p data-i18n="docs.3.desc">التسمية، الشعار، الألوان، الطباعة، المخططات السلكية، المكونات، وRTL والوصول.</p>
+            <div class="doc-card-foot"><span data-i18n="docs.3.meta">نظام تصميم · قراءة 10 دقائق</span><svg class="ic ic--dir"><use href="#i-arrow"/></svg></div>
+          </a>
+          <a class="doc-card reveal" data-delay="3" href="/docs/roadmap">
+            <div class="doc-card-top">
+              <span class="doc-card-num">04</span>
+              <span class="doc-card-icon"><svg class="ic"><use href="#i-calendar"/></svg></span>
+            </div>
+            <h3 data-i18n="docs.4.title">خارطة MVP</h3>
+            <p data-i18n="docs.4.desc">المراحل، الفريق، الميزانية، التسعير، مؤشرات النجاح، خطة التجربة، والمخاطر.</p>
+            <div class="doc-card-foot"><span data-i18n="docs.4.meta">24 أسبوعاً · قراءة 12 دقيقة</span><svg class="ic ic--dir"><use href="#i-arrow"/></svg></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <img class="brand-mark-lg" src="assets/logo-mark.svg" alt="" width="56" height="56" />
+          <h2 data-i18n="cta.title">جاهز ترى الأرشيف يفكّر؟</h2>
+          <p data-i18n="cta.sub">
+            سجّل الدخول أو أنشئ حساباً تجريبياً، ثم افتح المنصة وبدّل اللغة والقطاع والثيم وجرّب البحث والرفع ومعاينة المستند.
+          </p>
+          <div class="cta-actions">
+            <a class="btn btn--primary btn--lg" href="/login/?next=/prototype/">
+              <span data-i18n="cta.demo">ابدأ الآن</span>
+              <svg class="ic ic--dir"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="/docs/">
+              <svg class="ic"><use href="#i-layers"/></svg>
+              <span data-i18n="cta.docs">تصفّح الوثائق</span>
+            </a>
+          </div>
+          <p class="cta-note" data-i18n="cta.note">عرض تصميمي · لا يحتاج تسجيل · جميع البيانات وهمية</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/" aria-label="Archifex / أرشيفكس">
+            <img src="assets/logo-mark.svg" alt="" width="38" height="38" />
+            <span class="brand-text"><span class="brand-ar" data-i18n="brand.primary">أرشيفكس</span><span class="brand-en" data-i18n="brand.secondary">ARCHIFEX</span></span>
+          </a>
+          <p data-i18n="footer.about">الأرشيف الذي يفكّر. منصة أرشفة وإدارة مستندات ذكية، ثنائية اللغة، للمؤسسات التعليمية والشركات.</p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.product">المنتج</h4>
+          <ul>
+            <li><a href="/login/?next=/prototype/" data-i18n="footer.demo">دخول المنصة</a></li>
+            <li><a href="/docs/" data-i18n="footer.docs">الوثائق</a></li>
+            <li><a href="/docs/architecture" data-i18n="footer.architecture">المعمارية</a></li>
+            <li><a href="/docs/roadmap" data-i18n="footer.roadmap">خارطة الطريق</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.sectors">القطاعات</h4>
+          <ul>
+            <li><a href="#sectors" data-i18n="footer.edu">التعليم</a></li>
+            <li><a href="#sectors" data-i18n="footer.corp">الشركات</a></li>
+            <li><a href="/docs/brand" data-i18n="footer.brand">الهوية البصرية</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.project">المشروع</h4>
+          <ul>
+            <li><a href="/docs/database" data-i18n="footer.db">قاعدة البيانات</a></li>
+            <li><a href="/db/schema.sql" data-i18n="footer.schema">مخطط SQL</a></li>
+            <li><a href="/README.md" data-i18n="footer.readme">README</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer.rights">© 2026 أرشيفكس. جميع الحقوق محفوظة.</span>
+        <span class="legal">
+          <span data-i18n="footer.disclaimer">عرض تصميمي مستقل · جميع الأسماء والبيانات وهمية</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span data-i18n="footer.built">صُنع بعناية · RTL أولاً</span>
+        </span>
+        <a class="built" href="#main"><svg class="ic" style="width:13px;height:13px"><use href="#i-arrow"/></svg><span data-i18n="footer.top">إلى الأعلى</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/site.js?v=20261021" defer></script>
+</body>
+</html>

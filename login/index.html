@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17171C" />
+  <title>تسجيل الدخول — أرشيفكس / Archifex</title>
+  <meta name="description" content="سجّل الدخول إلى منصة أرشيفكس أو أنشئ حساباً تجريبياً لاستكشاف لوحة التحكم والأدوات." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        const p = new URLSearchParams(location.search);
+        const t = p.get('theme') || localStorage.getItem('archifex-theme');
+        const l = p.get('lang') || localStorage.getItem('archifex-lang');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        if (l === 'ar' || l === 'en') {
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../prototype/styles.css?v=20261021" />
+  <link rel="stylesheet" href="login.css?v=20261021" />
+</head>
+<body class="auth-page">
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.8 12h2M19.2 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.7 12h16.6M12 3.5c2.2 2.3 3.3 5.2 3.3 8.5S14.2 18.2 12 20.5C9.8 18.2 8.7 15.3 8.7 12S9.8 5.8 12 3.5Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.2" width="14" height="10" rx="2.2"/><path d="M8.2 10.2V7.8a3.8 3.8 0 0 1 7.6 0v2.4M12 14.2v2.4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.8 12S6 6.2 12 6.2 21.2 12 21.2 12 18 17.8 12 17.8 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 6.4A10.6 10.6 0 0 1 12 6.2c6 0 9.2 5.8 9.2 5.8a17 17 0 0 1-3.1 3.7M6.6 7.5A16.7 16.7 0 0 0 2.8 12S6 17.8 12 17.8a10 10 0 0 0 4-.8M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.4"/><path d="m4.5 7 7.5 5.5L19.5 7"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c.6-3.7 3.3-5.8 7.2-5.8s6.6 2.1 7.2 5.8"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20.5V5.2c0-.9.7-1.7 1.7-1.7h7.1c.9 0 1.7.8 1.7 1.7v15.3M14.5 9.5h3.8c.9 0 1.7.8 1.7 1.7v9.3M2.8 20.5h18.4"/><path d="M7.5 7.5h3M7.5 11h3M7.5 14.5h3"/></symbol>
+    <symbol id="i-graduation" viewBox="0 0 24 24"><path d="m2.8 9.2 9.2-4.4 9.2 4.4-9.2 4.4-9.2-4.4Z"/><path d="M6.6 11.2v4.2c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.2M21.2 9.2v5.6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.4c0 4.1-2.8 7.4-7 9.4-4.2-2-7-5.3-7-9.4V6l7-2.8Z"/><path d="m9 12 2 2 4-4.2"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z"/><path d="m18.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 6.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.6 21 20H3l9-16.4Z"/><path d="M12 9v4.5M12 17h.01"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5-10-6.5Z"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 8l-4 4 4 4M6 12h9"/></symbol>
+    <symbol id="i-login" viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M14 8l4 4-4 4M8 12h10"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="auth-top">
+    <a class="brand" href="/" aria-label="Archifex / أرشيفكس">
+      <img class="brand-mark" src="../assets/logo-mark.svg" alt="" width="42" height="42" />
+      <span class="brand-text"><span class="brand-ar" data-auth-i18n="brand.ar">أرشيفكس</span><span class="brand-en">ARCHIFEX</span></span>
+    </a>
+    <div class="auth-top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل المظهر">
+        <svg class="ic theme-icon-moon"><use href="#i-moon"/></svg>
+        <svg class="ic theme-icon-sun"><use href="#i-sun"/></svg>
+      </button>
+      <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language">
+        <svg class="ic"><use href="#i-globe"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <a class="btn btn-ghost" href="/">
+        <svg class="ic"><use href="#i-arrow"/></svg>
+        <span data-auth-i18n="top.back">العودة للموقع</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-showcase" aria-labelledby="showcaseTitle">
+      <span class="auth-kicker"><i class="dot" aria-hidden="true"></i><span data-auth-i18n="show.kicker">منصة أرشفة ذكية · النسخة التجريبية</span></span>
+      <h1 id="showcaseTitle" data-auth-i18n="show.title">أرشيفك المؤسسي، يفكّر معك.</h1>
+      <p data-auth-i18n="show.sub">ادخل إلى مساحة عمل تفاعلية كاملة: مستندات، OCR عربي وإنجليزي، بحث دلالي، سير عمل وتوقيع، صلاحيات وسجل مراجعة — ببيانات تجريبية آمنة.</p>
+      <ul class="auth-benefits">
+        <li class="auth-benefit"><svg class="ic"><use href="#i-check"/></svg><span data-auth-i18n="show.b1">جميع الأدوات مفعّلة: رفع، بحث، تصنيف، توقيع، تدقيق وإعدادات.</span></li>
+        <li class="auth-benefit"><svg class="ic"><use href="#i-check"/></svg><span data-auth-i18n="show.b2">بيئتان جاهزتان: تعليمية ومؤسسية، مع بيانات تجريبية لكل قطاع.</span></li>
+        <li class="auth-benefit"><svg class="ic"><use href="#i-check"/></svg><span data-auth-i18n="show.b3">حسابك وجلسة الدخول محفوظان محلياً في متصفحك فقط.</span></li>
+      </ul>
+      <div class="auth-proof" aria-hidden="true">
+        <div class="auth-proof-card"><strong>24.8k</strong><span data-auth-i18n="show.p1">مستند مفهرس</span></div>
+        <div class="auth-proof-card"><strong>98.2%</strong><span data-auth-i18n="show.p2">دقة استخراج</span></div>
+        <div class="auth-proof-card"><strong>36</strong><span data-auth-i18n="show.p3">جدولاً وحوكمة</span></div>
+      </div>
+      <div class="auth-trust">
+        <span><svg class="ic"><use href="#i-shield"/></svg><span data-auth-i18n="show.t1">عزل بيانات وصلاحيات</span></span>
+        <span><svg class="ic"><use href="#i-lock"/></svg><span data-auth-i18n="show.t2">تشفير كلمات المرور محلياً</span></span>
+        <span><svg class="ic"><use href="#i-sparkles"/></svg><span data-auth-i18n="show.t3">مساعد أرشيف ذكي</span></span>
+      </div>
+    </section>
+
+    <section class="auth-panel" aria-labelledby="authTitle">
+      <div class="auth-card">
+        <div class="auth-session" id="sessionBanner" hidden>
+          <span class="avatar" id="sessionAvatar">SA</span>
+          <span class="auth-session-info">
+            <strong id="sessionName">—</strong>
+            <span id="sessionEmail">—</span>
+          </span>
+          <a class="btn btn-primary" id="sessionContinue" href="/prototype/">متابعة</a>
+          <button class="btn btn-ghost" id="sessionLogout" type="button" data-auth-i18n="session.logout">خروج</button>
+        </div>
+
+        <div class="auth-card-head">
+          <span class="auth-badge">ARCHIFEX ACCESS</span>
+          <h2 id="authTitle" data-auth-i18n="login.title">تسجيل الدخول</h2>
+          <p id="authSubtitle" data-auth-i18n="login.sub">أدخل بيانات حسابك للوصول إلى مساحة العمل.</p>
+        </div>
+
+        <div class="auth-tabs" role="tablist" aria-label="طريقة الدخول">
+          <button class="auth-tab is-active" id="tabLogin" type="button" role="tab" aria-selected="true" aria-controls="loginForm" data-auth-i18n="tab.login">دخول</button>
+          <button class="auth-tab" id="tabRegister" type="button" role="tab" aria-selected="false" aria-controls="registerForm" data-auth-i18n="tab.register">إنشاء حساب</button>
+        </div>
+
+        <div class="auth-alert is-ok" id="authNotice" hidden>
+          <svg class="ic"><use href="#i-check"/></svg><span id="authNoticeText"></span>
+        </div>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="auth-alert is-error" id="loginError" hidden>
+            <svg class="ic"><use href="#i-alert"/></svg><span id="loginErrorText"></span>
+          </div>
+          <div class="auth-field">
+            <label for="loginEmail" data-auth-i18n="field.email">البريد الإلكتروني</label>
+            <div class="auth-input">
+              <svg class="ic"><use href="#i-mail"/></svg>
+              <input id="loginEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@company.sa" required />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="loginPassword" data-auth-i18n="field.password">كلمة المرور</label>
+            <div class="auth-input">
+              <svg class="ic"><use href="#i-lock"/></svg>
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+              <button class="auth-eye" type="button" data-eye="loginPassword" aria-label="إظهار كلمة المرور"><svg class="ic"><use href="#i-eye"/></svg></button>
+            </div>
+          </div>
+          <div class="auth-row">
+            <label class="auth-check"><input type="checkbox" id="rememberMe" checked /><span data-auth-i18n="login.remember">تذكرني على هذا الجهاز</span></label>
+            <button class="auth-link" id="forgotBtn" type="button" data-auth-i18n="login.forgot">نسيت كلمة المرور؟</button>
+          </div>
+          <button class="btn btn-primary auth-submit" id="loginSubmit" type="submit">
+            <svg class="ic"><use href="#i-login"/></svg>
+            <span data-auth-i18n="login.submit">دخول إلى المنصة</span>
+          </button>
+          <div class="auth-divider"><span data-auth-i18n="login.or">أو</span></div>
+          <button class="auth-demo" id="demoBtn" type="button">
+            <svg class="ic"><use href="#i-play"/></svg>
+            <span data-auth-i18n="login.demo">دخول سريع بالحساب التجريبي</span>
+          </button>
+        </form>
+
+        <form class="auth-form" id="registerForm" novalidate hidden>
+          <div class="auth-alert is-error" id="registerError" hidden>
+            <svg class="ic"><use href="#i-alert"/></svg><span id="registerErrorText"></span>
+          </div>
+          <div class="auth-grid">
+            <div class="auth-field">
+              <label for="regName" data-auth-i18n="field.name">الاسم الكامل</label>
+              <div class="auth-input">
+                <svg class="ic"><use href="#i-user"/></svg>
+                <input id="regName" name="name" type="text" autocomplete="name" placeholder="سارة العتيبي" required />
+              </div>
+            </div>
+            <div class="auth-field">
+              <label for="regOrg" data-auth-i18n="field.org">اسم المؤسسة</label>
+              <div class="auth-input">
+                <svg class="ic"><use href="#i-building"/></svg>
+                <input id="regOrg" name="organization" type="text" autocomplete="organization" placeholder="جامعة النور" required />
+              </div>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="regEmail" data-auth-i18n="field.email">البريد الإلكتروني</label>
+            <div class="auth-input">
+              <svg class="ic"><use href="#i-mail"/></svg>
+              <input id="regEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@company.sa" required />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="regSector" data-auth-i18n="field.sector">نوع المؤسسة</label>
+            <div class="auth-input">
+              <svg class="ic"><use href="#i-graduation"/></svg>
+              <select id="regSector" name="sector">
+                <option value="edu" data-auth-i18n="sector.edu">تعليمي — جامعة / كلية / مدرسة</option>
+                <option value="corp" data-auth-i18n="sector.corp">مؤسسي — شركة / جهة حكومية</option>
+              </select>
+            </div>
+          </div>
+          <div class="auth-grid">
+            <div class="auth-field">
+              <label for="regPassword" data-auth-i18n="field.password">كلمة المرور</label>
+              <div class="auth-input">
+                <svg class="ic"><use href="#i-lock"/></svg>
+                <input id="regPassword" name="password" type="password" autocomplete="new-password" placeholder="••••••••" required />
+                <button class="auth-eye" type="button" data-eye="regPassword" aria-label="إظهار كلمة المرور"><svg class="ic"><use href="#i-eye"/></svg></button>
+              </div>
+            </div>
+            <div class="auth-field">
+              <label for="regConfirm" data-auth-i18n="field.confirm">تأكيد كلمة المرور</label>
+              <div class="auth-input">
+                <svg class="ic"><use href="#i-lock"/></svg>
+                <input id="regConfirm" name="confirm" type="password" autocomplete="new-password" placeholder="••••••••" required />
+                <button class="auth-eye" type="button" data-eye="regConfirm" aria-label="إظهار كلمة المرور"><svg class="ic"><use href="#i-eye"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <label class="auth-check"><input type="checkbox" id="regTerms" /><span data-auth-i18n="register.terms">أوافق على شروط الاستخدام وسياسة الخصوصية (نموذج تجريبي).</span></label>
+          <button class="btn btn-primary auth-submit" id="registerSubmit" type="submit">
+            <svg class="ic"><use href="#i-sparkles"/></svg>
+            <span data-auth-i18n="register.submit">إنشاء الحساب والدخول</span>
+          </button>
+        </form>
+
+        <p class="auth-note">
+          <span data-auth-i18n="note.demo">الحساب التجريبي:</span>
+          <strong>demo@archifex.sa</strong> · <strong>Demo@2026</strong><br />
+          <span data-auth-i18n="note.local">نموذج واجهة فقط — الحسابات والجلسات تُحفظ في متصفحك ولا تُرسل إلى خادم.</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="auth-foot">
+    <span>© 2026 Archifex · <span data-auth-i18n="foot.tagline">الأرشيف الذي يفكّر</span></span>
+    <span>
+      <a href="/docs/" data-auth-i18n="foot.docs">الوثائق</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/prototype/" data-auth-i18n="foot.demo">النموذج</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/" data-auth-i18n="foot.home">الرئيسية</a>
+    </span>
+  </footer>
+
+  <script src="login.js?v=20261021"></script>
+</body>
+</html>

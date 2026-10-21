@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Archifex">
+  <defs>
+    <linearGradient id="afx-silver" x1="8" y1="7" x2="40" y2="41" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset=".42" stop-color="#DDE0E7"/>
+      <stop offset=".72" stop-color="#AFB3BE"/>
+      <stop offset="1" stop-color="#7C808B"/>
+    </linearGradient>
+    <linearGradient id="afx-tile" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1C1C22"/>
+      <stop offset="1" stop-color="#0B0B0F"/>
+    </linearGradient>
+    <linearGradient id="afx-spark" x1="30" y1="8" x2="41" y2="19" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#9EA2AC"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="13" fill="url(#afx-tile)" stroke="rgba(255,255,255,.16)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" rx="12.5" fill="none" stroke="rgba(255,255,255,.05)"/>
+  <path d="M10.5 20.2c0-1.5 1.2-2.7 2.7-2.7h6.3l2.4 2.8h12.9c1.5 0 2.7 1.2 2.7 2.7v10.4c0 1.5-1.2 2.7-2.7 2.7H13.2c-1.5 0-2.7-1.2-2.7-2.7V20.2Z" fill="none" stroke="url(#afx-silver)" stroke-width="1.7" stroke-linejoin="round"/>
+  <path d="M17.4 24.6h8.8l3.9 3.9v4.3c0 .9-.7 1.6-1.6 1.6H17.4" fill="none" stroke="url(#afx-silver)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <path d="M18.8 28.1h6.2M18.8 31.1h4.4" stroke="url(#afx-silver)" stroke-width="1.3" stroke-linecap="round" opacity=".72"/>
+  <path d="M33.3 8.2l1.1 3.1 3.1 1.1-3.1 1.1-1.1 3.1-1.1-3.1-3.1-1.1 3.1-1.1 1.1-3.1Z" fill="url(#afx-spark)"/>
+  <circle cx="39.6" cy="17.6" r="1.15" fill="#E8EAEF"/>
+  <circle cx="34.1" cy="20.3" r=".85" fill="#B9BDC6" opacity=".85"/>
+  <path d="M35 19.1l3.1-1" stroke="#D9DCE3" stroke-width=".9" stroke-linecap="round" opacity=".55"/>
+</svg>

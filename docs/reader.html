@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>المعمارية والنظام — وثائق أرشيفكس</title>
+  <meta name="description" content="وثيقة معمارية أرشيفكس: المكوّنات، حزمة التقنيات، خط أنابيب OCR والذكاء الاصطناعي، البحث، التعدد المستأجر، الأمان، النشر، والمراقبة." />
+  <meta name="theme-color" content="#17171C" />
+  <link rel="canonical" href="https://archifex.netlify.app/docs/architecture" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="أرشيفكس / Archifex" />
+  <meta property="og:title" content="المعمارية والنظام — وثائق أرشيفكس" />
+  <meta property="og:description" content="كيف يُبنى أرشيفكس: المكوّنات، الخط الأنبوبي، البيانات، الأمان، والتشغيل." />
+  <meta property="og:url" content="https://archifex.netlify.app/docs/architecture" />
+  <meta property="og:image" content="https://archifex.netlify.app/assets/og-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        document.documentElement.classList.add('js');
+        const p = new URLSearchParams(location.search);
+        const t = p.get('theme') || localStorage.getItem('archifex-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/site.css?v=20261020" />
+  <link rel="stylesheet" href="docs.css?v=20261021" />
+</head>
+<body>
+  <a class="skip-link" href="#markdown">تجاوز إلى محتوى الوثيقة</a>
+
+  <div class="reading-progress" aria-hidden="true"><i id="readProgress"></i></div>
+
+  <svg class="sr-only" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.8 12h2M19.2 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 8.5 4.5L12 12 3.5 7.5 12 3Z"/><path d="m4.5 12 7.5 4 7.5-4M4.5 16.5l7.5 4 7.5-4"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2.5 2.2 6.3 6.3 2.2-6.3 2.2L12 19.5l-2.2-6.3L3.5 11l6.3-2.2L12 2.5Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3.8h10V8M7 16H4.5V9.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2V16H17"/><rect x="7" y="13" width="10" height="7" rx="1"/><path d="M17 11h.01"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.5 14.5 14.5 9.5"/><path d="M7.2 16.8 5 19a3.5 3.5 0 0 1-5-5l3-3a3.5 3.5 0 0 1 5 0"/><path d="M16.8 7.2 19 5a3.5 3.5 0 0 1 5 5l-3 3a3.5 3.5 0 0 1-5 0"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3.5 10.5 8.5-7 8.5 7V20a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9.5Z"/><path d="M9.5 21v-7h5v7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5-10-6.5Z"/></symbol>
+    <symbol id="i-chevron-start" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="i-chevron-end" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+  </svg>
+
+  <header class="reader-header" id="readerHeader">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Archifex / أرشيفكس">
+        <img src="../assets/logo-mark.svg" alt="" width="32" height="32" />
+        <span class="brand-text"><span class="brand-ar">أرشيفكس</span><span class="brand-en">ARCHIFEX</span></span>
+      </a>
+      <nav class="docs-crumb" aria-label="مسار التنقل">
+        <a href="/">الموقع</a>
+        <span class="sep" aria-hidden="true"></span>
+        <a href="/docs/">الوثائق</a>
+        <span class="sep" aria-hidden="true"></span>
+        <strong id="crumbTitle">المعمارية والنظام</strong>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل المظهر">
+          <svg class="ic" id="themeIcon"><use href="#i-moon"/></svg>
+        </button>
+        <a class="btn btn--primary btn--sm header-cta" href="/prototype/">
+          <svg class="ic" style="width:14px;height:14px"><use href="#i-play"/></svg>
+          النموذج
+        </a>
+        <a class="icon-btn" href="/docs/" aria-label="كل الوثائق">
+          <svg class="ic"><use href="#i-book"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="reader-shell">
+    <aside class="reader-side" aria-label="تنقل الوثائق">
+      <a class="side-back" href="/docs/">
+        <svg class="ic"><use href="#i-chevron-start"/></svg>
+        كل الوثائق
+      </a>
+      <nav class="reader-doclist" id="docList" aria-label="قائمة الوثائق">
+        <a href="/docs/architecture" data-doc="01-architecture">
+          <span class="n">01</span>
+          <span><strong>المعمارية والنظام</strong><small>البنية والتقنيات</small></span>
+        </a>
+        <a href="/docs/database" data-doc="02-database-schema">
+          <span class="n">02</span>
+          <span><strong>قاعدة البيانات</strong><small>الجداول وRLS</small></span>
+        </a>
+        <a href="/docs/brand" data-doc="03-ui-brand-wireframe">
+          <span class="n">03</span>
+          <span><strong>الهوية والواجهة</strong><small>التصميم وRTL</small></span>
+        </a>
+        <a href="/docs/roadmap" data-doc="04-mvp-roadmap">
+          <span class="n">04</span>
+          <span><strong>خارطة MVP</strong><small>النطاق والميزانية</small></span>
+        </a>
+      </nav>
+      <div class="toc-block" id="tocBlock" hidden>
+        <h3>فهرس الوثيقة</h3>
+        <nav class="toc" id="toc" aria-label="فهرس الوثيقة"></nav>
+      </div>
+      <div class="side-meta">
+        الإصدار 1.0 · أكتوبر 2026<br />
+        وثيقة تصميم قابلة للتنفيذ<br />
+        أرشيفكس / Archifex
+      </div>
+    </aside>
+
+    <main class="reader-main" id="main">
+      <div id="readerLoading" class="reader-loading" role="status" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        جارٍ تحميل الوثيقة…
+      </div>
+
+      <div id="readerError" class="reader-error" hidden></div>
+
+      <div id="readerContent" hidden>
+        <header class="article-head">
+          <span class="article-kicker" id="docKicker">DOC / 01 · ARCHITECTURE</span>
+          <h1 id="docTitle">المعمارية والنظام</h1>
+          <p id="docDesc">كيف يُبنى أرشيفكس: المكوّنات، الخط الأنبوبي، البيانات، الأمان، والتشغيل.</p>
+          <div class="article-meta" id="docMeta">
+            <span><svg class="ic"><use href="#i-clock"/></svg><span id="readingTime">قراءة 12 دقيقة</span></span>
+            <span><svg class="ic"><use href="#i-layers"/></svg><span id="sectionCount">4 أقسام</span></span>
+            <span><svg class="ic"><use href="#i-calendar"/></svg>آخر تحديث: أكتوبر 2026</span>
+          </div>
+          <div class="article-tools">
+            <button class="btn btn--ghost" id="printBtn" type="button">
+              <svg class="ic"><use href="#i-print"/></svg><span>طباعة</span>
+            </button>
+            <button class="btn btn--ghost" id="copyLinkBtn" type="button">
+              <svg class="ic"><use href="#i-link"/></svg><span>نسخ الرابط</span>
+            </button>
+            <a class="btn btn--ghost" id="rawLink" href="/docs/01-architecture.md">
+              <svg class="ic"><use href="#i-code"/></svg><span>Markdown</span>
+            </a>
+          </div>
+          <details class="mobile-toc" id="mobileToc">
+            <summary>فهرس الوثيقة <svg class="ic"><use href="#i-chevron-down"/></svg></summary>
+            <nav class="toc" id="mobileTocList" aria-label="فهرس الوثيقة"></nav>
+          </details>
+        </header>
+
+        <article class="markdown" id="markdown" dir="rtl"></article>
+
+        <nav class="doc-pager" id="docPager" aria-label="التنقل بين الوثائق"></nav>
+      </div>
+
+      <noscript>
+        <div class="reader-error" style="display:block">
+          يحتاج عارض الوثائق إلى JavaScript. يمكنك قراءة الملف مباشرة:
+          <a href="/docs/01-architecture.md">01-architecture.md</a>.
+        </div>
+      </noscript>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js" defer></script>
+  <script src="docs.js?v=20261020" defer></script>
+  <script src="reader.js?v=20261020" defer></script>
+</body>
+</html>

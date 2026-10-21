@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #101014;
+    color: #f4f5f7;
+    font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 30px;
+    padding: 58px 64px;
+  }
+  body::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(760px 460px at 82% -8%, rgba(220, 224, 234, 0.16), transparent 64%),
+      radial-gradient(600px 360px at 6% 100%, rgba(150, 156, 170, 0.1), transparent 62%);
+  }
+  body::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 75% 80% at 50% 30%, #000, transparent 78%);
+    opacity: .7;
+  }
+  .copy, .visual { position: relative; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 66px; height: 66px; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; }
+  .brand-ar { font-size: 27px; font-weight: 700; letter-spacing: -.02em; }
+  .brand-en { font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: .34em; color: #a0a2ac; margin-top: 7px; }
+  h1 { margin-top: 48px; font-size: 76px; line-height: 1.06; letter-spacing: -.045em; font-weight: 600; }
+  h1 .accent {
+    background: linear-gradient(100deg, #ffffff 0%, #d8dbe3 38%, #9ea2ac 72%, #f2f3f6 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sub { margin-top: 20px; max-width: 500px; color: #a0a2ac; font-size: 19px; line-height: 1.65; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .chips span {
+    font-size: 12px; color: #d7d9df; padding: 7px 11px; border-radius: 7px;
+    border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05);
+  }
+  .visual { display: grid; place-items: center; }
+  .scene { position: relative; width: 100%; height: 100%; }
+  .doc {
+    position: absolute; width: 250px; height: 320px; border-radius: 16px;
+    background: linear-gradient(160deg, #26262e, #1a1a20);
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: 0 30px 70px rgba(0,0,0,.45);
+    padding: 20px;
+  }
+  .doc::before {
+    content: ""; position: absolute; top: 0; inset-inline-end: 0;
+    border-width: 0 0 34px 34px; border-style: solid;
+    border-color: transparent transparent #101014 transparent;
+  }
+  .doc-a { top: 54px; inset-inline-start: 52px; transform: rotate(-7deg); opacity: .55; }
+  .doc-b { top: 38px; inset-inline-start: 96px; transform: rotate(2deg); opacity: .8; }
+  .doc-c { top: 26px; inset-inline-start: 142px; transform: rotate(7deg); }
+  .doc-head { display: flex; align-items: center; gap: 9px; }
+  .doc-dot { width: 24px; height: 24px; border-radius: 6px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+  .doc-lines { flex: 1; display: grid; gap: 5px; }
+  .doc-lines i { display: block; height: 5px; border-radius: 99px; background: rgba(255,255,255,.14); }
+  .doc-lines i:first-child { width: 70%; background: rgba(255,255,255,.26); }
+  .doc-body { margin-top: 22px; display: grid; gap: 9px; }
+  .doc-body i { display: block; height: 6px; border-radius: 99px; background: rgba(255,255,255,.1); }
+  .doc-body i:nth-child(2) { width: 86%; }
+  .doc-body i:nth-child(3) { width: 68%; }
+  .ai-badge {
+    position: absolute; top: 198px; inset-inline-start: 118px;
+    width: 74px; height: 74px; border-radius: 20px; display: grid; place-items: center;
+    background: linear-gradient(160deg, #f5f6f9, #b9bdc7);
+    color: #121216; box-shadow: 0 18px 40px rgba(0,0,0,.45), inset 0 1px 0 #fff;
+    font-family: Inter, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  }
+  .stat {
+    position: absolute; bottom: 28px; inset-inline-start: 18px;
+    padding: 13px 16px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(30,30,36,.82);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.4);
+  }
+  .stat strong { display: block; font-family: Inter, sans-serif; font-size: 26px; letter-spacing: -.03em; }
+  .stat span { display: block; margin-top: 2px; font-size: 11px; color: #a0a2ac; }
+  .sign {
+    position: absolute; bottom: 34px; inset-inline-end: 6px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 10px;
+    border: 1px solid rgba(127,209,168,.24);
+    background: rgba(127,209,168,.08); color: #7fd1a8;
+    font-size: 11px; font-weight: 600;
+  }
+  .sign i { width: 7px; height: 7px; border-radius: 50%; background: #7fd1a8; }
+  .foot {
+    position: absolute; inset-inline: 64px; bottom: 26px; z-index: 2;
+    display: flex; align-items: center; justify-content: space-between;
+    color: #74767f; font-family: Inter, sans-serif; font-size: 10px; letter-spacing: .18em;
+  }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="brand">
+      <img src="logo-mark.svg" alt="" />
+      <span class="brand-text"><span class="brand-ar">أرشيفكس</span><span class="brand-en">ARCHIFEX</span></span>
+    </div>
+    <h1>الأرشيف<br /><span class="accent">الذي يفكّر.</span></h1>
+    <p class="sub">أرشفة ذكية ثنائية اللغة: OCR، بحث دلالي، استخراج بيانات، وحوكمة كاملة.</p>
+    <div class="chips"><span>عربي + إنجليزي</span><span>OCR أصلي</span><span>بحث دلالي</span><span>توقيع رقمي</span></div>
+  </div>
+  <div class="visual">
+    <div class="scene">
+      <div class="doc doc-a"><div class="doc-head"><span class="doc-dot"></span><span class="doc-lines"><i></i><i></i></span></div><div class="doc-body"><i></i><i></i><i></i></div></div>
+      <div class="doc doc-b"><div class="doc-head"><span class="doc-dot"></span><span class="doc-lines"><i></i><i></i></span></div><div class="doc-body"><i></i><i></i><i></i></div></div>
+      <div class="doc doc-c">
+        <div class="doc-head"><span class="doc-dot"></span><span class="doc-lines"><i></i><i></i></span></div>
+        <div class="doc-body"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="ai-badge">AI</div>
+      <div class="stat"><strong>98.6%</strong><span>دقة الاستخراج</span></div>
+      <div class="sign"><i></i> توقيع مكتمل</div>
+    </div>
+  </div>
+  <div class="foot"><span>ARCHIFEX.NETLIFY.APP</span><span>THE ARCHIVE THAT THINKS</span></div>
+</body>
+</html>

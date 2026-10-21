@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصفحة غير موجودة — أرشيفكس</title>
+  <meta name="description" content="الصفحة المطلوبة غير موجودة في موقع أرشيفكس." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#17171C" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        const t = localStorage.getItem('archifex-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/site.css?v=20261020" />
+</head>
+<body>
+  <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+
+  <svg class="sr-only" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.8 12h2M19.2 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3.5 10.5 8.5-7 8.5 7V20a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9.5Z"/><path d="M9.5 21v-7h5v7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5-10-6.5Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Archifex / أرشيفكس">
+        <img src="/assets/logo-mark.svg" alt="" width="38" height="38" />
+        <span class="brand-text"><span class="brand-ar">أرشيفكس</span><span class="brand-en">ARCHIFEX</span></span>
+      </a>
+      <div class="header-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل المظهر">
+          <svg class="ic" id="themeIcon"><use href="#i-moon"/></svg>
+        </button>
+        <a class="btn btn--primary btn--sm header-cta" href="/prototype/">جرّب النموذج</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="notfound" id="main">
+    <div class="notfound-card">
+      <div class="notfound-code" aria-hidden="true">404</div>
+      <h1>هذه الصفحة لم تُؤرشف بعد.</h1>
+      <p>الرابط الذي فتحته غير موجود أو تم نقله. يمكنك العودة إلى الصفحة الرئيسية، أو فتح النموذج التفاعلي، أو تصفّح وثائق المشروع.</p>
+      <div class="notfound-actions">
+        <a class="btn btn--primary" href="/">
+          <svg class="ic"><use href="#i-home"/></svg>
+          الصفحة الرئيسية
+        </a>
+        <a class="btn btn--ghost" href="/prototype/">
+          <svg class="ic"><use href="#i-play"/></svg>
+          النموذج التفاعلي
+        </a>
+      </div>
+      <div class="notfound-links">
+        <a href="/docs/">الوثائق</a>
+        <a href="/docs/architecture">المعمارية</a>
+        <a href="/docs/database">قاعدة البيانات</a>
+        <a href="/docs/roadmap">خارطة MVP</a>
+      </div>
+      <p style="margin-top: 30px; font-size: 11.5px; color: var(--muted-2)">Page not found · Archifex</p>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeBtn');
+      const icon = document.getElementById('themeIcon');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const apply = (theme) => {
+        html.dataset.theme = theme;
+        try { localStorage.setItem('archifex-theme', theme); } catch (e) {}
+        if (icon) icon.querySelector('use').setAttribute('href', theme === 'dark' ? '#i-sun' : '#i-moon');
+        if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'التبديل إلى المظهر الفاتح' : 'التبديل إلى المظهر الداكن');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17171C' : '#F2F3F5');
+      };
+      apply(html.dataset.theme === 'light' ? 'light' : 'dark');
+      if (btn) btn.addEventListener('click', () => apply(html.dataset.theme === 'dark' ? 'light' : 'dark'));
+    })();
+  </script>
+</body>
+</html>

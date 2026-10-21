@@ -1,0 +1,143 @@
+# ==========================================================================
+# ARCHIFEX — Netlify configuration
+# Static design package: landing site + interactive prototype + docs reader
+# ==========================================================================
+
+[build]
+  publish = "."
+
+# ---------- Friendly URLs ----------
+[[redirects]]
+  from = "/login"
+  to = "/login/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/login/"
+  to = "/login/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/signup"
+  to = "/login/?mode=register"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/signup/"
+  to = "/login/?mode=register"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/demo"
+  to = "/prototype/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/brand"
+  to = "/docs/brand"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/schema"
+  to = "/db/schema.sql"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/readme"
+  to = "/README.md"
+  status = 302
+  force = true
+
+# ---------- Documentation reader (clean URLs) ----------
+[[redirects]]
+  from = "/docs/architecture"
+  to = "/docs/reader.html?doc=01-architecture"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/architecture/"
+  to = "/docs/reader.html?doc=01-architecture"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/database"
+  to = "/docs/reader.html?doc=02-database-schema"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/database/"
+  to = "/docs/reader.html?doc=02-database-schema"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/brand"
+  to = "/docs/reader.html?doc=03-ui-brand-wireframe"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/brand/"
+  to = "/docs/reader.html?doc=03-ui-brand-wireframe"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/roadmap"
+  to = "/docs/reader.html?doc=04-mvp-roadmap"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs/roadmap/"
+  to = "/docs/reader.html?doc=04-mvp-roadmap"
+  status = 200
+  force = true
+
+# ---------- Security headers ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# ---------- Caching ----------
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/prototype/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/docs/*.md"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
