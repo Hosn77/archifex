@@ -20,6 +20,17 @@
 
 الموقع مستضاف على Netlify (خطة Free) من مجلد `archifex/` مباشرة، دون خطوة بناء. إعدادات الـ redirects والـ headers والـ CSP في [`netlify.toml`](./netlify.toml).
 
+## 📦 مستودع GitHub
+
+**https://github.com/Hosn77/archifex**
+
+المستودع خاص (Private) حالياً. لربط Netlify به بدلاً من النشر اليدوي:
+
+1. افتح Site configuration → Build & deploy → Link repository.
+2. اختر المستودع `Hosn77/archifex` والفرع `main`.
+3. اترك Build command فارغاً، واجعل Publish directory = `.`.
+4. أبقِ إعدادات `netlify.toml` كما هي.
+
 ---
 
 ## المحتويات
