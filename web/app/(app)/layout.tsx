@@ -76,7 +76,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           </span>
           <span
             className={`badge ${
-              trial.isActiveSubscription ? "badge-success" : trial.trialExpired ? "badge-danger" : ""
+              trial.isActiveSubscription ? "badge-success" : trial.canWrite ? "" : "badge-danger"
             }`}
           >
             {trial.label}

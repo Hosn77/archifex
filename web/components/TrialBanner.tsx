@@ -19,15 +19,17 @@ export function TrialBanner({ trial }: TrialBannerProps) {
     );
   }
 
-  if (trial.trialExpired) {
+  if (trial.trialExpired || trial.subscriptionInactive) {
     return (
       <div className="trial-banner trial-banner-expired" role="alert">
         <span className="trial-dot" aria-hidden="true" />
         <div>
-          <strong>انتهت فترة التجربة المجانية</strong>
+          <strong>
+            {trial.trialExpired ? "انتهت فترة التجربة المجانية" : "الاشتراك غير نشط"}
+          </strong>
           <p>
             القراءة والتصدير ما زالا متاحين، لكن الرفع وتعديل البيانات مقيدان حتى تفعيل الاشتراك.
-            انتهت التجربة في {formatArabicDate(trial.endsAt)}.
+            {trial.trialExpired ? ` انتهت التجربة في ${formatArabicDate(trial.endsAt)}.` : ""}
           </p>
         </div>
         <Link className="button button-gold button-small" href="/settings#billing">

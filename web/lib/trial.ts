@@ -5,6 +5,7 @@ export interface TrialState {
   isActiveSubscription: boolean;
   isTrialing: boolean;
   trialExpired: boolean;
+  subscriptionInactive: boolean;
   daysLeft: number;
   endsAt: Date;
   label: string;
@@ -15,6 +16,7 @@ export function getTrialState(workspace: Workspace, now = new Date()): TrialStat
   const isActiveSubscription = workspace.subscription_status === "active";
   const isTrialing = workspace.subscription_status === "trialing";
   const trialExpired = isTrialing && now.getTime() > endsAt.getTime();
+  const subscriptionInactive = !isActiveSubscription && !isTrialing;
   const canWrite =
     isActiveSubscription ||
     (isTrialing && now.getTime() <= endsAt.getTime());
@@ -24,14 +26,15 @@ export function getTrialState(workspace: Workspace, now = new Date()): TrialStat
 
   let label = "الاشتراك غير نشط";
   if (isActiveSubscription) label = "اشتراك نشط";
-  else if (isTrialing && !trialExpired) label = `تجربة مجانية — ${daysLeft} يوم متبقٍ`;
   else if (trialExpired) label = "انتهت التجربة المجانية";
+  else if (isTrialing) label = `تجربة مجانية — ${daysLeft} يوم متبقٍ`;
 
   return {
     canWrite,
     isActiveSubscription,
     isTrialing,
     trialExpired,
+    subscriptionInactive,
     daysLeft,
     endsAt,
     label,

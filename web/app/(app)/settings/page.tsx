@@ -73,7 +73,7 @@ export default async function SettingsPage() {
             </div>
             <span
               className={`badge ${
-                trial.isActiveSubscription ? "badge-success" : trial.trialExpired ? "badge-danger" : ""
+                trial.isActiveSubscription ? "badge-success" : trial.canWrite ? "" : "badge-danger"
               }`}
             >
               {trial.label}
@@ -108,10 +108,12 @@ export default async function SettingsPage() {
           </dl>
 
           <div className="billing-panel">
-            <h3>{trial.trialExpired ? "ترقية مطلوبة لاستئناف الكتابة" : "جاهز للترقية عند الحاجة"}</h3>
+            <h3>{!trial.canWrite ? "ترقية مطلوبة لاستئناف الكتابة" : "جاهز للترقية عند الحاجة"}</h3>
             <p>
-              {trial.trialExpired
-                ? "انتهت التجربة. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران في قاعدة البيانات."
+              {!trial.canWrite
+                ? trial.trialExpired
+                  ? "انتهت التجربة. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران في قاعدة البيانات."
+                  : "الاشتراك غير نشط. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران حتى تفعيل الاشتراك."
                 : "ستبقى التجربة نشطة حتى التاريخ أعلاه. بعد انتهائها يمكنك الترقية لمواصلة الرفع والتعديل دون فقدان أي بيانات."}
             </p>
             <p style={{ marginBottom: 0 }}>
