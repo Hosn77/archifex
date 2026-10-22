@@ -323,6 +323,7 @@ netlify deploy --site archifex --dir . --prod --no-build
 ```
 
 - `publish = "."` في `netlify.toml`.
+- `.netlifyignore` يستبعد `web/` و`node_modules/` و`.next/` من النشر الثابت، حتى لا يُرفع تطبيق SaaS أو مخرجات البناء إلى Netlify.
 - التحويلات النظيفة للوثائق.
 - Security headers + CSP في `netlify.toml`.
 

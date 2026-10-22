@@ -1,0 +1,10 @@
+# The Netlify site is the static Archifex demo only.
+# Keep the Next.js SaaS app, local builds and secrets out of static deploys.
+web/
+.next/
+node_modules/
+.git/
+.netlify/
+.env
+.env.*
+*.log
