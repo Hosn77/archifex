@@ -79,7 +79,7 @@
   }
 
   function setMeta(doc) {
-    const title = `${doc.title} — وثائق أرشيفكس`;
+    const title = `${doc.title} | وثائق Archifex — مَدار فَلَك`;
     document.title = title;
     const setAttr = (selector, attr, value) => {
       const el = $(selector);

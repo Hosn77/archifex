@@ -1,6 +1,7 @@
 /* ==========================================================================
    ARCHIFEX — Public site
    Charcoal / deep-black / brushed-silver · RTL-first · dark + light
+   Parent company: مَدار فَلَك | MadarFalak
    ========================================================================== */
 
 /* ---------- Tokens ---------- */
@@ -227,6 +228,50 @@ html[dir="ltr"] .section-head--split .section-sub { justify-self: end; }
 .brand-en {
   font-family: var(--font-en); font-size: 9px; font-weight: 600;
   letter-spacing: 0.26em; color: var(--muted); margin-top: 3px;
+}
+.brand-company {
+  margin-top: 3px;
+  color: #e0a96d;
+  font-family: var(--font-en);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.madar-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px clamp(20px, 4vw, 48px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+  background: #0f172a;
+  color: #94a3b8;
+  font-family: var(--font-en);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.madar-company {
+  color: #e0a96d;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.madar-company span,
+.madar-product span {
+  color: rgba(226, 232, 240, 0.35);
+  margin-inline: 6px;
+}
+.madar-product { white-space: nowrap; }
+@media (max-width: 640px) {
+  .madar-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 8px;
+    letter-spacing: 0.05em;
+  }
+  .madar-product { white-space: normal; }
 }
 html[lang="en"] .brand-ar {
   font-family: var(--font-en); font-size: 17px; font-weight: 700;
@@ -745,6 +790,29 @@ html[dir="rtl"] .doc-card:hover .doc-card-foot .ic { transform: translateX(-4px)
 .footer-col ul { margin-top: 13px; display: grid; gap: 8px; }
 .footer-col a { color: var(--muted); font-size: 12.5px; transition: color 0.2s; }
 .footer-col a:hover { color: var(--text); }
+.footer-madar {
+  margin: 26px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-en);
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.footer-madar::before {
+  content: "مَدار فَلَك | MadarFalak";
+  display: block;
+  margin-bottom: 4px;
+  color: #e0a96d;
+  font-family: var(--font-ar);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
 .footer-bottom {
   display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
   margin-top: 38px; padding-top: 20px; border-top: 1px solid var(--line);

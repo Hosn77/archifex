@@ -5,6 +5,9 @@
 node_modules/
 dist/
 build/
+.next/
+.vercel/
+*.tsbuildinfo
 
 # Logs and OS/editor files
 *.log

@@ -38,7 +38,7 @@
      --------------------------------------------------------------------- */
   const T = {
     ar: {
-      'doc.title': 'أرشيفكس — لوحة التحكم',
+      'doc.title': 'Archifex | لوحة التحكم - من شركة مَدار فَلَك',
       'a11y.skip': 'تجاوز إلى المحتوى',
       'a11y.close': 'إغلاق',
       'a11y.logout': 'تسجيل الخروج',
@@ -299,7 +299,7 @@
     },
 
     en: {
-      'doc.title': 'Archifex — Dashboard',
+      'doc.title': 'Archifex | Dashboard - by MadarFalak',
       'a11y.skip': 'Skip to content',
       'a11y.close': 'Close',
       'a11y.logout': 'Sign out',
@@ -974,7 +974,7 @@
     html.dataset.theme = theme;
     localStorage.setItem('archifex-theme', theme);
     const meta = $('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f1f2f4' : '#17171C');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#E2E8F0' : '#0F172A');
     $('#themeToggle')?.setAttribute('aria-label', theme === 'light' ? t('a11y.theme') : t('a11y.theme'));
     drawChart();
   }

@@ -35,7 +35,7 @@
 
   const AUTH_T = {
     ar: {
-      'doc.title': 'تسجيل الدخول — أرشيفكس / Archifex',
+      'doc.title': 'تسجيل الدخول | Archifex — من شركة مَدار فَلَك',
       'brand.ar': 'أرشيفكس',
       'top.back': 'العودة للموقع',
       'show.kicker': 'منصة أرشفة ذكية · النسخة التجريبية',
@@ -100,7 +100,7 @@
       'a11y.lang': 'Switch language to English',
     },
     en: {
-      'doc.title': 'Sign in — Archifex',
+      'doc.title': 'Sign in | Archifex — MadarFalak',
       'brand.ar': 'Archifex',
       'top.back': 'Back to site',
       'show.kicker': 'Smart archiving platform · Live demo',
@@ -323,7 +323,7 @@
     html.dataset.theme = theme;
     localStorage.setItem('archifex-theme', theme);
     const meta = $('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'light' ? '#f1f2f4' : '#17171C');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#E2E8F0' : '#0F172A');
     $('#themeBtn')?.setAttribute('aria-label', at('a11y.theme'));
   }
 

@@ -25,8 +25,8 @@
 
   const I18N = {
     ar: {
-      'meta.title': 'أرشيفكس — الأرشيف الذي يفكّر | منصة أرشفة ذكية',
-      'meta.desc': 'أرشيفكس / Archifex — منصة أرشفة وإدارة مستندات ثنائية اللغة للمؤسسات التعليمية والشركات. OCR عربي وإنجليزي، بحث ذكي، استخراج بيانات بالذكاء الاصطناعي، صلاحيات دقيقة، توقيع رقمي، وسجل تدقيق.',
+      'meta.title': 'Archifex | نظام إدارة الأرشيف والملفات - من شركة مَدار فَلَك',
+      'meta.desc': 'Archifex من شركة مَدار فَلَك | MadarFalak: نظام سحابي لإدارة الأرشيف والملفات، مساحات عمل معزولة لكل مؤسسة، حماية RLS، وتجربة مجانية 30 يوماً. OCR عربي وإنجليزي، بحث ذكي، صلاحيات دقيقة، وسجل تدقيق.',
       'a11y.skip': 'تجاوز إلى المحتوى',
       'a11y.mainnav': 'التنقل الرئيسي',
       'a11y.theme': 'تبديل المظهر',
@@ -225,15 +225,15 @@
       'footer.db': 'قاعدة البيانات',
       'footer.schema': 'مخطط SQL',
       'footer.readme': 'README',
-      'footer.rights': '© 2026 أرشيفكس. جميع الحقوق محفوظة.',
+      'footer.rights': '© 2026 Archifex — جميع الحقوق محفوظة لشركة مَدار فَلَك.',
       'footer.disclaimer': 'عرض تصميمي مستقل · جميع الأسماء والبيانات وهمية',
       'footer.built': 'صُنع بعناية · RTL أولاً',
       'footer.top': 'إلى الأعلى',
     },
 
     en: {
-      'meta.title': 'Archifex — The archive that thinks | Smart archiving platform',
-      'meta.desc': 'Archifex is a bilingual document management and archiving platform for educational institutions and companies. Arabic + English OCR, smart search, AI metadata extraction, precise permissions, e-signature, and an audit trail.',
+      'meta.title': 'Archifex | Document Archiving System - by MadarFalak',
+      'meta.desc': 'Archifex by MadarFalak: a multi-tenant document archiving platform with isolated workspaces, RLS protection, and a 30-day free trial. Arabic + English OCR, smart search, precise permissions, and an audit trail.',
       'a11y.skip': 'Skip to content',
       'a11y.mainnav': 'Main navigation',
       'a11y.theme': 'Toggle theme',
@@ -432,7 +432,7 @@
       'footer.db': 'Database',
       'footer.schema': 'SQL schema',
       'footer.readme': 'README',
-      'footer.rights': '© 2026 Archifex. All rights reserved.',
+      'footer.rights': '© 2026 Archifex — All rights reserved to MadarFalak.',
       'footer.disclaimer': 'Independent design concept · All names and data are fictional',
       'footer.built': 'Crafted with care · RTL-first',
       'footer.top': 'Back to top',
@@ -451,7 +451,7 @@
     const btn = $('#themeBtn');
     if (btn) btn.setAttribute('aria-label', t(state.theme === 'dark' ? 'a11y.theme.light' : 'a11y.theme.dark'));
     const themeColor = $meta('theme-color');
-    if (themeColor) themeColor.setAttribute('content', state.theme === 'dark' ? '#17171C' : '#F2F3F5');
+    if (themeColor) themeColor.setAttribute('content', state.theme === 'dark' ? '#0F172A' : '#E2E8F0');
     const shot = $('#heroShot');
     if (shot) {
       shot.src = `assets/dashboard-${state.lang}-${state.theme}.png`;

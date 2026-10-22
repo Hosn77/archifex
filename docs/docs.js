@@ -27,7 +27,7 @@
     const btn = $('#themeBtn');
     if (btn) btn.setAttribute('aria-label', theme === 'dark' ? 'التبديل إلى المظهر الفاتح' : 'التبديل إلى المظهر الداكن');
     const meta = $('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#17171C' : '#F2F3F5');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0F172A' : '#E2E8F0');
     if (!silent) {
       document.dispatchEvent(new CustomEvent('archifex:theme', { detail: { theme } }));
     }

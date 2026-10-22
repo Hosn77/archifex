@@ -1,14 +1,14 @@
 {
-  "name": "أرشيفكس / Archifex",
+  "name": "Archifex | نظام إدارة الأرشيف والملفات - من شركة مَدار فَلَك",
   "short_name": "Archifex",
-  "description": "منصة أرشفة وإدارة مستندات ذكية، ثنائية اللغة، للمؤسسات التعليمية والشركات.",
+  "description": "Archifex من شركة مَدار فَلَك: مساحات أرشيف معزولة لكل مؤسسة، حماية RLS، وتجربة مجانية 30 يوماً.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#17171C",
-  "theme_color": "#17171C",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
   "icons": [
     {
       "src": "/assets/icon-192.png",

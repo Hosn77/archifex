@@ -1,68 +1,147 @@
-# أرشيفكس / Archifex
+# Archifex | نظام إدارة الأرشيف والملفات
 
-**الأرشيف الذي يفكّر** · *The archive that thinks*
+**من شركة مَدار فَلَك | MadarFalak**
 
-حزمة تصميم متكاملة لنظام أرشفة وإدارة مستندات ذكي، ثنائي اللغة (عربي/إنجليزي)، يخدم المؤسسات التعليمية والشركات: OCR عربي وإنجليزي، بحث دلالي ولغوي، استخراج بيانات بالذكاء الاصطناعي، صلاحيات دقيقة، سجل تدقيق، سير عمل وتوقيع رقمي.
+> **مَدار فَلَك** — أنظمة وحلول برمجية في مدار واحد  
+> **MadarFalak** — Software Systems and Solutions in One Orbit
 
-> **الحالة:** عرض تصميمي (Design Package) — النموذج التفاعلي واجهة أمامية فقط ببيانات وهمية، وليس نظاماً إنتاجياً.
+Archifex هو نظام سحابي لإدارة الأرشيف والملفات، مبني حول مساحات عمل معزولة لكل مؤسسة، مع تجربة مجانية 30 يوماً، وحماية على مستوى الصفوف (RLS)، وواجهة عربية/إنجليزية بهوية مَدار فَلَك.
 
-## 🔗 الموقع المباشر
+---
+
+## حالة المشروع
+
+يحتوي المستودع على طبقتين:
+
+| الطبقة | المسار | الحالة |
+|---|---|---|
+| الموقع التعريفي والنموذج التفاعلي | جذر المستودع (`index.html`, `prototype/`, `docs/`) | demo ثابت منشور على Netlify |
+| تطبيق SaaS الإنتاجي | [`web/`](./web/) | Next.js 15 + React 19 + Supabase، جاهز للربط والنشر |
+
+الموقع الثابت الحالي هو عرض تصميمي/تفاعلي ببيانات وهمية. تطبيق `web/` هو الأساس الإنتاجي للمصادقة، تعدد المستأجرين، التجربة، وسياسات RLS.
+
+---
+
+## الروابط
 
 | الوجهة | الرابط |
 |---|---|
-| الصفحة التعريفية | **https://archifex.netlify.app/** |
+| المستودع (عام) | **https://github.com/Hosn77/archifex** |
+| الموقع الثابت | **https://archifex.netlify.app/** |
 | النموذج التفاعلي | **https://archifex.netlify.app/prototype/** |
 | مركز الوثائق | **https://archifex.netlify.app/docs/** |
-| المعمارية | https://archifex.netlify.app/docs/architecture |
-| قاعدة البيانات | https://archifex.netlify.app/docs/database |
-| الهوية والواجهة | https://archifex.netlify.app/docs/brand |
-| خارطة MVP | https://archifex.netlify.app/docs/roadmap |
 
-الموقع مستضاف على Netlify (خطة Free) من مجلد `archifex/` مباشرة، دون خطوة بناء. إعدادات الـ redirects والـ headers والـ CSP في [`netlify.toml`](./netlify.toml).
-
-## 📦 مستودع GitHub
-
-**https://github.com/Hosn77/archifex**
-
-المستودع خاص (Private) حالياً. لربط Netlify به بدلاً من النشر اليدوي:
-
-1. افتح Site configuration → Build & deploy → Link repository.
-2. اختر المستودع `Hosn77/archifex` والفرع `main`.
-3. اترك Build command فارغاً، واجعل Publish directory = `.`.
-4. أبقِ إعدادات `netlify.toml` كما هي.
+> تطبيق Vercel سيُنشأ من نفس المستودع مع **Root Directory = `web`**. راجع قسم النشر أدناه.
 
 ---
 
-## المحتويات
+## الهوية والعلامة
 
-| الملف | الوصف |
+- **الشركة الأم:** مَدار فَلَك | MadarFalak
+- **المنتج:** Archifex
+- **العنوان:** `Archifex | نظام إدارة الأرشيف والملفات - من شركة مَدار فَلَك`
+- **شريط العلامة:** `Archifex | Document Archiving System Powered by MadarFalak`
+- **التذييل:** `Developed & Powered by MadarFalak Software Solutions — جميع الحقوق محفوظة لشركة مَدار فَلَك`
+- **الشعار النصي:** «أنظمة وحلول برمجية في مدار واحد» / “Software Systems and Solutions in One Orbit”
+
+### لوحة الألوان
+
+| الاستخدام | اللون |
 |---|---|
-| [`index.html`](./index.html) | الصفحة التعريفية العامة (عربي/إنجليزي، داكن/فاتح) |
-| [`docs/index.html`](./docs/index.html) | مركز الوثائق المنسّق على Netlify |
-| [`docs/reader.html`](./docs/reader.html) | عارض Markdown مع فهرس، Mermaid، ونسخ الكود |
-| [`docs/01-architecture.md`](./docs/01-architecture.md) | المعمارية، حزمة التقنيات، خط أنابيب OCR/AI، البحث، الأمان، التعدد المستأجر، النشر، المخاطر |
-| [`docs/02-database-schema.md`](./docs/02-database-schema.md) | تصميم قاعدة البيانات، ERD، القرارات، RLS، الفهارس، الاحتفاظ، أمثلة استعلامات |
-| [`docs/03-ui-brand-wireframe.md`](./docs/03-ui-brand-wireframe.md) | التسمية، الشعار، الألوان، الطباعة، المخططات السلكية، المكونات، RTL، الوصول |
-| [`docs/04-mvp-roadmap.md`](./docs/04-mvp-roadmap.md) | المراحل، الجدول الزمني، الفريق، الميزانية، التسعير، KPIs، التجربة، المخاطر |
-| [`db/schema.sql`](./db/schema.sql) | DDL كامل لـ PostgreSQL 16 مع Enums وRLS وPartitions |
-| [`prototype/`](./prototype/) | لوحة تحكم تفاعلية (HTML/CSS/JS، بلا خطوة بناء) |
-| [`assets/logo-mark.svg`](./assets/logo-mark.svg) | شعار العلامة (SVG) |
-| [`assets/favicon.svg`](./assets/favicon.svg) | أيقونة الموقع |
+| كحلي عميق | `#0F172A` |
+| كحلي مرتفع | `#1E293B` |
+| فضي معدني | `#E2E8F0` |
+| نحاسي / ذهبي وردي | `#E0A96D` |
+
+الخطوط: **IBM Plex Sans Arabic** للعربية و**Inter** للإنجليزية، مع دعم RTL أصلي.
 
 ---
 
-## تشغيل الموقع محلياً
+## بنية تطبيق SaaS في `web/`
 
-لا يحتاج تثبيت أي حزمة. اختر إحدى الطريقتين:
+```
+web/
+├─ app/
+│  ├─ page.tsx                     # الصفحة التعريفية الجديدة
+│  ├─ login/page.tsx               # تسجيل الدخول / إنشاء مساحة
+│  ├─ (app)/layout.tsx             # هيكل المساحة المحمية + تذييل العلامة
+│  ├─ (app)/dashboard/page.tsx     # لوحة التحكم
+│  ├─ (app)/documents/page.tsx     # سجل المستندات
+│  ├─ (app)/settings/page.tsx      # التجربة والاشتراك والعزل
+│  └─ api/
+│     ├─ trial/status/route.ts     # حالة التجربة/الكتابة
+│     └─ documents/route.ts        # GET/POST مع فحص RLS والتجربة
+│        documents/[id]/route.ts   # PATCH/DELETE مع نفس الفحص
+├─ components/                     # Brand, TrialBanner, LoginForm, ...
+├─ lib/
+│  ├─ supabase/server.ts           # Supabase SSR client
+│  ├─ supabase/client.ts           # Supabase browser client
+│  ├─ workspace.ts                 # المساحة الحالية وRLS
+│  └─ trial.ts                     # حساب canWrite / أيام التجربة
+├─ middleware.ts                   # حماية المسارات وتحديث الجلسة
+├─ supabase/migrations/            # مخطط + RLS + Storage
+└─ .env.example
+```
 
-### 1) خادم محلي (مُوصى به)
+### 1) تعدد المستأجرين
+
+كل جدول أعمال يحمل `workspace_id`:
+
+- `workspaces`
+- `workspace_members`
+- `categories`
+- `documents`
+- `archive_records`
+- `audit_logs`
+
+كل استعلام في التطبيق يفلتر بـ `workspace_id`، لكن **الضمان النهائي في قاعدة البيانات**: سياسات RLS تتحقق من العضوية عبر `is_workspace_member(workspace_id)`، ولا يمكن قراءة صفوف مساحة أخرى حتى بمعرفة المعرّف.
+
+### 2) التجربة المجانية 30 يوماً
+
+عند تسجيل مستخدم جديد، trigger على `auth.users` ينشئ تلقائياً:
+
+1. `profiles`
+2. `workspaces` مع `trial_start_date = now()` و`trial_ends_at = now() + interval '30 days'`
+3. `workspace_members` بدور `owner`
+4. تصنيفاً افتراضياً «عام»
+
+دالة `workspace_can_write(workspace_id)` تسمح بالكتابة عندما:
+
+```sql
+subscription_status = 'active'
+OR (subscription_status = 'trialing' AND now() <= trial_ends_at)
+```
+
+مع دور `owner` أو `admin` أو `editor`. بعد انتهاء التجربة دون اشتراك:
+
+- **القراءة تبقى متاحة** (سياسات SELECT لا تعتمد على التجربة).
+- **INSERT / UPDATE / DELETE مرفوضة** على المستندات والتصنيفات والسجلات.
+- واجهة `TrialBanner` تعرض دعوة ترقية، وAPI يعيد `402` مع `TRIAL_OR_SUBSCRIPTION_REQUIRED`.
+
+### 3) حماية إضافية
+
+- `protect_workspace_billing_fields` يمنع المتصفح من تعديل `trial_ends_at` أو `subscription_status` أو `plan` أو `owner_id`.
+- `ensure_document_tenant_consistency` يمنع نقل مستند بين مساحات، ويمنع ربط تصنيف من مساحة أخرى.
+- `ensure_archive_record_tenant_consistency` يمنع ربط سجل أرشفة بمستند من مساحة أخرى.
+- `prevent_tenant_move` يمنع نقل التصنيفات وسجلات الأرشفة بين المساحات.
+- `workspace_owner_id` + سياسات العضوية تمنع `admin` من ترقية نفسه إلى `owner` أو تعديل عضوية المالك.
+- سجل التدقيق يُكتب فقط من Triggers بصلاحية definer؛ لا يمكن للعميل تزوير صفوف `audit_logs`.
+- `audit_logs` يسجّل عمليات المستندات تلقائياً.
+- Storage bucket `archifex-documents` خاص، ومساره `workspace_id/document_id/file`، وسياساته تتحقق من العضوية وحق الكتابة.
+- `middleware.ts` يحمي `/dashboard` و`/documents` و`/settings` ويعيد الجلسة عبر cookies.
+
+---
+
+## تشغيل الموقع الثابت محلياً
+
+لا يحتاج تثبيت حزم:
 
 ```powershell
 cd archifex
 python -m http.server 8766
 ```
 
-ثم افتح:
+ثم:
 
 ```
 http://127.0.0.1:8766/            # الصفحة التعريفية
@@ -70,209 +149,205 @@ http://127.0.0.1:8766/prototype/  # النموذج التفاعلي
 http://127.0.0.1:8766/docs/       # مركز الوثائق
 ```
 
-أو من جذر المشروع:
+---
+
+## تشغيل تطبيق SaaS محلياً
+
+### المتطلبات
+
+- Node.js 20+ (تم البناء بـ Node 22/24)
+- مشروع Supabase
+- Supabase CLI (اختياري لكن مُوصى به)
+
+### 1) تثبيت الحزم
 
 ```powershell
-python -m http.server 8766 --directory archifex
+cd archifex/web
+npm install
 ```
 
-> **ملاحظة:** عارض الوثائق يستخدم `fetch` لقراءة ملفات Markdown؛ لذلك يحتاج خادماً محلياً (أو Netlify). فتح `docs/reader.html` عبر `file://` سيعرض رسالة خطأ مع رابط الملف الخام.
+### 2) إنشاء مشروع Supabase
 
-### 2) فتح مباشر
+1. أنشئ مشروعاً جديداً من لوحة Supabase.
+2. من **Project Settings → API** انسخ:
+   - Project URL
+   - `anon` public key
+   - `service_role` key (للسيرفر فقط)
 
-افتح `archifex/index.html` أو `archifex/prototype/index.html` في المتصفح. يعمل عبر `file://`، لكن الخطوط (IBM Plex Sans Arabic / Inter) تحتاج اتصالاً بالإنترنت؛ توجد بدائل نظام تلقائية.
+### 3) تطبيق migrations
+
+الملفات:
+
+| الملف | المحتوى |
+|---|---|
+| [`web/supabase/migrations/202610210001_archifex_schema.sql`](./web/supabase/migrations/202610210001_archifex_schema.sql) | الجداول، الفهارس، Triggers، إنشاء المساحة عند التسجيل |
+| [`web/supabase/migrations/202610210002_archifex_rls_and_trial.sql`](./web/supabase/migrations/202610210002_archifex_rls_and_trial.sql) | دوال العضوية والتجربة، RLS، `create_workspace` |
+| [`web/supabase/migrations/202610210003_archifex_storage.sql`](./web/supabase/migrations/202610210003_archifex_storage.sql) | Bucket وسياسات Storage |
+
+باستخدام Supabase CLI من مجلد `web`:
+
+```powershell
+supabase link --project-ref YOUR_PROJECT_REF
+supabase db push
+```
+
+أو نفّذ الملفات بالترتيب من **Supabase Dashboard → SQL Editor**.
+
+> **مهم:** migrations لم تُنفَّذ بعد على مشروع Supabase حي في هذه البيئة لعدم توفر بيانات الاعتماد. نفّذها ثم اختبر التسجيل فعلياً.
+
+### 4) متغيرات البيئة
+
+```powershell
+cd archifex/web
+Copy-Item .env.example .env.local
+```
+
+املأ:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+لا تضع `SUPABASE_SERVICE_ROLE_KEY` في أي متغير يبدأ بـ `NEXT_PUBLIC_`، ولا تستخدمه في مكوّن عميل.
+
+### 5) تشغيل التطبيق
+
+```powershell
+npm run dev
+```
+
+افتح `http://localhost:3000`. أنشئ حساباً جديداً من `/login`؛ سيبدأ trigger مساحة العمل والتجربة تلقائياً.
+
+### 6) التحقق من البناء
+
+```powershell
+npm run typecheck
+npm run build
+```
 
 ---
 
-## ما الذي يعمل في النموذج؟
+## اختبار التجربة وRLS
 
-- **تبديل اللغة:** عربي ⇄ إنجليزي مع RTL/LTR فوري وحفظ التفضيل.
-- **تبديل الثيم:** داكن ⇄ فاتح، يُطبَّق قبل أول رسم لمنع الوميض.
-- **تبديل القطاع:** بيانات تعليمية (جامعة النور) ⇄ مؤسسية (شركة أفق).
-- **لوحة تحكم:** مؤشرات، رسم نشاط (7 أيام/30 يوماً/12 شهراً)، مساعد أرشيف AI، جدول مستندات بتبويبات وبحث، مهام توقيع، سجل نشاط، توزيع تصنيفات.
-- **درج المستند:** معاينة ورقية، حقول مستخرجة بنسب ثقة، بيانات وصفية، نص OCR، سجل تدقيق.
-- **رفع مستند:** سحب وإفلات، قائمة ملفات، تصنيف وسرية، خيارات OCR/AI، تقدم محاكى وإضافة صف جديد.
-- **لوحة أوامر:** `Ctrl/Cmd + K` أو `/`، تنقل بالأسهم، Enter للفتح.
-- **إشعارات، Toasts، شريط جانبي متجاوب، جوال 390px.**
+### محاكاة انتهاء التجربة
 
-### روابط عرض عميقة (لل demos واللقطات)
+من SQL Editor، بعد إنشاء مساحة:
+
+```sql
+update public.workspaces
+set trial_start_date = now() - interval '31 days',
+    trial_ends_at = now() - interval '1 day',
+    subscription_status = 'trialing'
+where slug = 'YOUR_WORKSPACE_SLUG';
+```
+
+ثم:
+
+- `/dashboard` يعرض «انتهت التجربة».
+- `/api/trial/status` يعيد `can_write: false`.
+- `POST /api/documents` يعيد `402`.
+- إدخال مباشر في `documents` من عميل authenticated يُرفض بواسطة RLS.
+- القراءة تبقى متاحة.
+
+### تفعيل اشتراك
+
+```sql
+update public.workspaces
+set subscription_status = 'active',
+    plan = 'professional'
+where slug = 'YOUR_WORKSPACE_SLUG';
+```
+
+تغيير الحقول المحمية يجب أن يتم عبر `service_role` أو SQL Editor، وليس من المتصفح.
+
+### اختبار العزل
+
+1. أنشئ حسابين في مؤسستين مختلفتين.
+2. أضف مستنداً في كل مساحة.
+3. استخدم API للقراءة من الحساب الأول؛ يجب ألا يظهر مستند الحساب الثاني.
+4. جرّب تمرير `workspace_id` الآخر في `POST /api/documents`؛ RLS ترفض.
+
+---
+
+## النشر على Vercel
+
+المستودع عام وجاهز للنشر. الموقع الثابت يبقى على Netlify من جذر المستودع، بينما تطبيق Next.js في `web/`.
+
+1. افتح Vercel → **Add New → Project**.
+2. اختر مستودع `Hosn77/archifex`.
+3. اضبط **Root Directory** على `web`.
+4. Framework Preset: **Next.js**.
+5. أضف متغيرات البيئة:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `NEXT_PUBLIC_SITE_URL` = رابط الإنتاج
+6. Deploy.
+
+كل push إلى `main` ينشئ Production Deployment، وكل PR/فرع ينشئ Preview Deployment.
+
+> لا تضع `netlify.toml` أو ملفات الموقع الثابت داخل `web/`. إعداد Root Directory = `web` يفصل النشرين.
+
+---
+
+## الموقع الثابت والنموذج
+
+### ما يعمل في النموذج؟
+
+- تبديل اللغة عربي ⇄ إنجليزي مع RTL/LTR وحفظ التفضيل.
+- تبديل الثيم داكن ⇄ فاتح.
+- تبديل القطاع التعليمي/المؤسسي.
+- لوحة تحكم، مستندات، رفع محاكى، بحث، سجل تدقيق، إعدادات.
+- درج مستند، معاينة، بيانات وصفية، OCR وهمي.
+- لوحة أوامر `Ctrl/Cmd + K`، إشعارات، تصميم متجاوب.
+
+### روابط عرض عميقة
 
 | الرابط | النتيجة |
 |---|---|
-| `?lang=ar` أو `?lang=en` | فرض اللغة |
-| `?theme=dark` أو `?theme=light` | فرض الثيم |
-| `?sector=edu` أو `?sector=corp` | فرض القطاع |
+| `?lang=ar` / `?lang=en` | فرض اللغة |
+| `?theme=dark` / `?theme=light` | فرض الثيم |
+| `?sector=edu` / `?sector=corp` | فرض القطاع |
 | `?demo=drawer&doc=edu-1` | فتح درج مستند |
 | `?demo=upload` | فتح نافذة الرفع |
 | `?demo=palette` | فتح لوحة الأوامر |
-| `?demo=sidebar` | فتح الشريط الجانبي |
 
-مثال:
-
-```
-http://127.0.0.1:8766/prototype/?lang=en&theme=light&sector=corp&demo=drawer
-```
-
-### اختصارات
-
-| الاختصار | الوظيفة |
-|---|---|
-| `Ctrl/Cmd + K` | لوحة الأوامر |
-| `/` | بحث سريع (خارج الحقول) |
-| `↑` / `↓` | تنقل |
-| `Enter` | فتح |
-| `Esc` | إغلاق الطبقة العلوية |
-
----
-
-## الهيكل
-
-```
-archifex/
-├─ index.html                 # الصفحة التعريفية
-├─ 404.html                   # صفحة الخطأ
-├─ netlify.toml               # Publish + Redirects + Headers + CSP
-├─ robots.txt / sitemap.xml   # SEO
-├─ site.webmanifest           # بيانات PWA
-├─ README.md
-├─ assets/
-│  ├─ logo-mark.svg           # الشعار
-│  ├─ favicon.svg             # الأيقونة
-│  ├─ site.css / site.js      # تصميم وسلوك الموقع التعريفي
-│  ├─ dashboard-*.png         # لقطات النموذج (عربي/إنجليزي × داكن/فاتح)
-│  ├─ og-cover.png            # صورة المشاركة 1200×630
-│  └─ icon-192.png / icon-512.png
-├─ db/
-│  └─ schema.sql              # PostgreSQL 16 DDL
-├─ docs/
-│  ├─ index.html              # مركز الوثائق
-│  ├─ reader.html             # عارض Markdown
-│  ├─ docs.css / docs.js      # تنسيق وسلوك الوثائق
-│  ├─ reader.js               # التحميل، الفهرس، Mermaid، نسخ الكود
-│  ├─ 01-architecture.md
-│  ├─ 02-database-schema.md
-│  ├─ 03-ui-brand-wireframe.md
-│  └─ 04-mvp-roadmap.md
-└─ prototype/
-   ├─ index.html              # البنية + SVG sprite + الحوارات
-   ├─ styles.css              # نظام التصميم + الثيمات + RTL + الاستجابة
-   ├─ app.js                  # الترجمات + البيانات + التفاعل
-   └─ preview-mobile.html     # أداة عرض 390px (اختيارية)
-```
-
----
-
-## ملخص القرارات التقنية
-
-| الطبقة | الاختيار |
-|---|---|
-| الواجهة | Next.js 15 / React 19 / TypeScript / Tailwind + shadcn |
-| الخادم | NestJS Modular Monolith + Worker منفصل |
-| قاعدة البيانات | PostgreSQL 16 + RLS + pgvector + pg_trgm |
-| البحث | Postgres FTS + Trigram + متجهات، ثم OpenSearch عند التوسع |
-| التخزين | S3-compatible + Presigned URLs + Object Lock |
-| الطوابير | Redis + BullMQ |
-| الهوية | Keycloak / OIDC / SAML + MFA |
-| OCR | Tesseract 5 (ara+eng) + خيار PaddleOCR/Surya أو سحابي |
-| الاستخراج | LLM عبر Adapter + JSON Schema + قواعد مساندة |
-| التوقيع | داخلي + Documenso |
-| النشر | Docker + Kubernetes (أو ECS) |
-| المراقبة | OpenTelemetry + Grafana/Loki/Tempo + Sentry |
-
-**التعدد:** Shared schema + RLS افتراضياً، مع خيار Schema/DB مخصص للعملاء الكبار.
-**اللغة:** أعمدة `*_ar` / `*_en`، وتطبيع عربي للبحث فقط، والعرض يحفظ النص الأصلي.
-
----
-
-## تطبيق مخطط قاعدة البيانات
-
-المتطلبات: PostgreSQL 16 + الإضافات `pgcrypto`, `citext`, `pg_trgm`, `vector` (pgvector ≥ 0.7), `ltree`.
-
-```bash
-createdb archifex
-psql -d archifex -f db/schema.sql
-```
-
-ثم أنشئ المستأجر الأول، الأدوار، والمستخدم:
-
-```sql
-INSERT INTO tenants (slug, name_ar, name_en, kind)
-VALUES ('nour-university', 'جامعة النور', 'Al Noor University', 'education')
-RETURNING id;
-
-SELECT create_default_roles('<tenant-uuid>');
-```
-
-> **مهم:** RLS مفعّل بـ `FORCE`. دور التطبيق يجب أن يكون غير مالك وغير `BYPASSRLS`، ويضبط `SET LOCAL app.tenant_id` و`app.user_id` في كل معاملة. راجع [`docs/02-database-schema.md`](./docs/02-database-schema.md) §5.
-
----
-
-## الهوية البصرية سريعاً
-
-| | |
-|---|---|
-| الخلفية | `#17171C` |
-| الشريط الجانبي | `#121212` |
-| البطاقات | `#1E1E24` |
-| السطح المرتفع | `#2A2A32` |
-| الفضي | `#D9DCE3` |
-| النص | `#F4F5F7` |
-| النص المساعد | `#A0A2AC` |
-| العربية | IBM Plex Sans Arabic |
-| الإنجليزية | Inter |
-| الأرقام | JetBrains Mono |
-
-الشعار: مجلد معدني + ورقة مستند + شرارة AI. المساحة الآمنة 25%، والحد الأدنى 24px رقمياً.
-
----
-
-## خطة MVP في سطر
-
-24 أسبوعاً · 10 أشخاص · 6 أنواع مستندات · 3 عملاء تجريبيين · ميزانية 1.9–2.7 مليون ريال · إطلاق بعد اجتياز بوابة الأمن والأداء وNPS ≥ 40.
-
----
-
-## النشر على Netlify
-
-الموقع منشور حالياً على **https://archifex.netlify.app/** (آخر نشر: 21 أكتوبر 2026، HTTPS مفعّل).
-
-لإعادة النشر يدوياً من جهازك (يتطلب تسجيل الدخول إلى Netlify):
+### النشر على Netlify
 
 ```powershell
 cd archifex
 netlify deploy --site archifex --dir . --prod --no-build
 ```
 
-- `publish = "."` في `netlify.toml`، لأن الحزمة كلها ملفات ثابتة.
-- التحويلات النظيفة: `/docs/architecture` → عارض الوثيقة، وهكذا لبقية الوثائق.
-- Security headers + CSP مضبوطة في `netlify.toml`.
-- يمكن ربط المستودع بـ Netlify لاحقاً لتفعيل النشر التلقائي؛ لا توجد حاجة لخطوة build.
-
-لاختبار إعدادات Netlify محلياً (اختياري):
-
-```powershell
-netlify dev
-```
-
-## حدود النموذج
-
-- لا خادم، لا قاعدة بيانات، لا مصادقة حقيقية.
-- الرفع والبحث والمعالجة محاكاة أو محلية.
-- البيانات أسماء وأرقام وهمية.
-- الخطوط من Google Fonts (تحتاج إنترنت).
-- عارض الوثائق يحمّل `marked` و`mermaid` من jsDelivr؛ يمكن استبدالهما بملفات محلية عند العمل دون إنترنت.
-- `db/schema.sql` لم يُشغَّل بعد على نسخة PostgreSQL 16 حية في هذه البيئة (لا يتوفر Docker/PostgreSQL محلياً).
-- النموذج مرجع بصري/تفاعلي، وليس كود إنتاج.
-
-## الخطوات التالية المقترحة
-
-1. ربط نطاق مخصص (مثلاً `archifex.sa`) — HTTPS على نطاق `netlify.app` مفعّل بالفعل.
-2. تحويل التوكنات إلى `tailwind.config.ts` + مكتبة مكونات (Storybook).
-3. إنشاء Monorepo (Turborepo) وتطبيق NestJS + Prisma مع migrations.
-4. تنفيذ RLS واختبارات العزل في CI.
-5. بناء pipeline OCR على عيّنات حقيقية وقياس الدقة.
-6. اختبار تجريبي مع جامعتين وشركة.
+- `publish = "."` في `netlify.toml`.
+- التحويلات النظيفة للوثائق.
+- Security headers + CSP في `netlify.toml`.
 
 ---
 
-© 2026 — حزمة تصميم مقترحة. جميع الأسماء والبيانات في النموذج لأغراض العرض فقط.
+## حدود ما تم تنفيذه
+
+- migrations وواجهات Next.js مكتوبة ومبنية بنجاح، لكنها لم تُختبر على مشروع Supabase حي بعد.
+- رفع الملفات الفعلي إلى Storage لم يُربط بواجهة بعد؛ سجلات المستندات تحفظ الميتاداتا، وسياسات Storage جاهزة.
+- بوابة الدفع/الاشتراك لم تُربط؛ تفعيل `subscription_status` يتم حالياً من السيرفر/SQL.
+- الموقع الثابت الحالي لم يُحوَّل بالكامل إلى Next.js؛ بقي كواجهة عرض على Netlify.
+- لم يتم إنشاء مشروع Vercel بعد لعدم توفر صلاحيات/ربط المشروع.
+
+---
+
+## الخطوات التالية
+
+1. تنفيذ migrations على Supabase واختبار trigger التسجيل.
+2. ربط Vercel بمجلد `web` وإضافة متغيرات البيئة.
+3. إضافة رفع فعلي إلى Storage مع presigned URLs أو Supabase upload.
+4. ربط بوابة دفع (Stripe/Paddle/Moyasar) لتحديث `subscription_status` عبر webhook.
+5. إضافة دعوات الفريق وإدارة الأعضاء.
+6. إضافة اختبارات عزل RLS آلية في CI.
+
+---
+
+© 2026 — **مَدار فَلَك | MadarFalak**  
+Developed & Powered by MadarFalak Software Solutions — جميع الحقوق محفوظة لشركة مَدار فَلَك
