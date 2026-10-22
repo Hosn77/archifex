@@ -38,13 +38,18 @@ export async function GET() {
       subscription_status: current.workspace.subscription_status,
       trial_start_date: current.workspace.trial_start_date,
       trial_ends_at: current.workspace.trial_ends_at,
+      subscription_started_at: current.workspace.subscription_started_at,
+      subscription_ends_at: current.workspace.subscription_ends_at,
+      last_renewed_at: current.workspace.last_renewed_at,
     },
     access: {
       can_write: trial.canWrite,
       is_trialing: trial.isTrialing,
       trial_expired: trial.trialExpired,
       is_active_subscription: trial.isActiveSubscription,
+      subscription_expired: trial.subscriptionExpired,
       days_left: trial.daysLeft,
+      subscription_days_left: trial.subscriptionDaysLeft,
       label: trial.label,
     },
     membership: {

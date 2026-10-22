@@ -6,26 +6,48 @@ export interface TrialState {
   isTrialing: boolean;
   trialExpired: boolean;
   subscriptionInactive: boolean;
+  subscriptionExpired: boolean;
   daysLeft: number;
+  subscriptionDaysLeft: number;
   endsAt: Date;
+  subscriptionEndsAt: Date | null;
   label: string;
 }
 
 export function getTrialState(workspace: Workspace, now = new Date()): TrialState {
   const endsAt = new Date(workspace.trial_ends_at);
+  const subscriptionEndsAt = workspace.subscription_ends_at
+    ? new Date(workspace.subscription_ends_at)
+    : null;
+  const subscriptionEndsTime =
+    subscriptionEndsAt && Number.isFinite(subscriptionEndsAt.getTime())
+      ? subscriptionEndsAt.getTime()
+      : null;
+
   const isActiveSubscription = workspace.subscription_status === "active";
   const isTrialing = workspace.subscription_status === "trialing";
   const trialExpired = isTrialing && now.getTime() > endsAt.getTime();
+  const subscriptionExpired =
+    isActiveSubscription &&
+    subscriptionEndsTime !== null &&
+    now.getTime() > subscriptionEndsTime;
   const subscriptionInactive = !isActiveSubscription && !isTrialing;
+
   const canWrite =
-    isActiveSubscription ||
+    (isActiveSubscription && !subscriptionExpired) ||
     (isTrialing && now.getTime() <= endsAt.getTime());
+
   const daysLeft = isTrialing
     ? Math.max(0, Math.ceil((endsAt.getTime() - now.getTime()) / 86_400_000))
     : 0;
+  const subscriptionDaysLeft =
+    isActiveSubscription && subscriptionEndsTime !== null
+      ? Math.max(0, Math.ceil((subscriptionEndsTime - now.getTime()) / 86_400_000))
+      : 0;
 
   let label = "الاشتراك غير نشط";
-  if (isActiveSubscription) label = "اشتراك نشط";
+  if (isActiveSubscription && subscriptionExpired) label = "انتهى الاشتراك";
+  else if (isActiveSubscription) label = "اشتراك نشط";
   else if (trialExpired) label = "انتهت التجربة المجانية";
   else if (isTrialing) label = `تجربة مجانية — ${daysLeft} يوم متبقٍ`;
 
@@ -35,8 +57,11 @@ export function getTrialState(workspace: Workspace, now = new Date()): TrialStat
     isTrialing,
     trialExpired,
     subscriptionInactive,
+    subscriptionExpired,
     daysLeft,
+    subscriptionDaysLeft,
     endsAt,
+    subscriptionEndsAt,
     label,
   };
 }

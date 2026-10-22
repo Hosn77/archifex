@@ -32,7 +32,7 @@ async function getContext() {
     return {
       error: NextResponse.json(
         {
-          error: "انتهت التجربة المجانية أو أن الاشتراك غير نشط. تعديل المستندات مقيد حالياً.",
+          error: "انتهت التجربة المجانية أو الاشتراك. تعديل المستندات مقيد حالياً.",
           code: "TRIAL_OR_SUBSCRIPTION_REQUIRED",
         },
         { status: 402 },

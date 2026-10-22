@@ -15,8 +15,28 @@ export interface Workspace {
   subscription_status: SubscriptionStatus;
   plan: WorkspacePlan;
   billing_customer_id: string | null;
+  subscription_started_at: string | null;
+  subscription_ends_at: string | null;
+  last_renewed_at: string | null;
+  billing_notes: string | null;
   created_at: string;
   updated_at: string;
+}
+
+/**
+ * Provider-console view of a tenant. This is only ever produced by the
+ * server-side admin API; browser sessions cannot query another workspace.
+ */
+export interface AdminWorkspace extends Workspace {
+  owner_email: string | null;
+  owner_name: string | null;
+  member_count: number;
+  document_count: number;
+  can_write: boolean;
+  access_label: string;
+  days_left: number;
+  subscription_days_left: number;
+  subscription_expired: boolean;
 }
 
 export interface Membership {

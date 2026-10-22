@@ -68,18 +68,22 @@ web/
 │  ├─ (app)/dashboard/page.tsx     # لوحة التحكم
 │  ├─ (app)/documents/page.tsx     # سجل المستندات
 │  ├─ (app)/settings/page.tsx      # التجربة والاشتراك والعزل
+│  ├─ (app)/admin/page.tsx         # لوحة مزود الخدمة (محمية)
 │  └─ api/
 │     ├─ trial/status/route.ts     # حالة التجربة/الكتابة
-│     └─ documents/route.ts        # GET/POST مع فحص RLS والتجربة
-│        documents/[id]/route.ts   # PATCH/DELETE مع نفس الفحص
-├─ components/                     # Brand, TrialBanner, LoginForm, ...
+│     ├─ documents/route.ts        # GET/POST مع فحص RLS والتجربة
+│     │  documents/[id]/route.ts   # PATCH/DELETE مع نفس الفحص
+│     └─ admin/workspaces/route.ts # قائمة كل المساحات (service role)
+│        admin/workspaces/[id]/route.ts # تجديد/تمديد الاشتراك
+├─ components/                     # Brand, TrialBanner, AdminDashboard, ...
 ├─ lib/
 │  ├─ supabase/server.ts           # Supabase SSR client
 │  ├─ supabase/client.ts           # Supabase browser client
+│  ├─ platform-admin.ts            # فحص مزود الخدمة + service-role client
 │  ├─ workspace.ts                 # المساحة الحالية وRLS
-│  └─ trial.ts                     # حساب canWrite / أيام التجربة
+│  └─ trial.ts                     # حساب canWrite / أيام التجربة والاشتراك
 ├─ middleware.ts                   # حماية المسارات وتحديث الجلسة
-├─ supabase/migrations/            # مخطط + RLS + Storage
+├─ supabase/migrations/            # مخطط + RLS + Storage + إدارة المنصة
 └─ .env.example
 ```
 
@@ -108,11 +112,16 @@ web/
 دالة `workspace_can_write(workspace_id)` تسمح بالكتابة عندما:
 
 ```sql
-subscription_status = 'active'
+(
+  subscription_status = 'active'
+  AND (subscription_ends_at IS NULL OR now() <= subscription_ends_at)
+)
 OR (subscription_status = 'trialing' AND now() <= trial_ends_at)
 ```
 
-مع دور `owner` أو `admin` أو `editor`. بعد انتهاء التجربة دون اشتراك:
+مع دور `owner` أو `admin` أو `editor`. الاشتراك النشط دون تاريخ انتهاء محدد يبقى
+مفتوحاً، أما الاشتراك ذو تاريخ انتهاء فيُقفل تلقائياً بعد مروره. بعد انتهاء التجربة
+أو الاشتراك دون تجديد:
 
 - **القراءة تبقى متاحة** (سياسات SELECT لا تعتمد على التجربة).
 - **INSERT / UPDATE / DELETE مرفوضة** على المستندات والتصنيفات والسجلات.
@@ -120,7 +129,7 @@ OR (subscription_status = 'trialing' AND now() <= trial_ends_at)
 
 ### 3) حماية إضافية
 
-- `protect_workspace_billing_fields` يمنع المتصفح من تعديل `trial_ends_at` أو `subscription_status` أو `plan` أو `owner_id`.
+- `protect_workspace_billing_fields` يمنع المتصفح من تعديل `trial_ends_at` أو `subscription_status` أو `plan` أو `owner_id` أو `subscription_started_at` أو `subscription_ends_at` أو `last_renewed_at` أو `billing_notes`.
 - `ensure_document_tenant_consistency` يمنع نقل مستند بين مساحات، ويمنع ربط تصنيف من مساحة أخرى.
 - `ensure_archive_record_tenant_consistency` يمنع ربط سجل أرشفة بمستند من مساحة أخرى.
 - `prevent_tenant_move` يمنع نقل التصنيفات وسجلات الأرشفة بين المساحات.
@@ -128,7 +137,24 @@ OR (subscription_status = 'trialing' AND now() <= trial_ends_at)
 - سجل التدقيق يُكتب فقط من Triggers بصلاحية definer؛ لا يمكن للعميل تزوير صفوف `audit_logs`.
 - `audit_logs` يسجّل عمليات المستندات تلقائياً.
 - Storage bucket `archifex-documents` خاص، ومساره `workspace_id/document_id/file`، وسياساته تتحقق من العضوية وحق الكتابة.
-- `middleware.ts` يحمي `/dashboard` و`/documents` و`/settings` ويعيد الجلسة عبر cookies.
+- `middleware.ts` يحمي `/dashboard` و`/documents` و`/settings` و`/admin` ويعيد الجلسة عبر cookies.
+
+### 4) لوحة مزود الخدمة `/admin`
+
+حساب مزود الخدمة (صاحب المنصة) يرى كل مساحات العملاء ويجدد اشتراكاتها من واجهة
+واحدة، دون فتح RLS العابر للمساحات لأي حساب عادي:
+
+- `public.platform_admins` قائمة سماح يقرأ فيها كل مدير صفّه فقط.
+- `/api/admin/*` يتحقق من جلسة المستخدم أولاً، ثم يستخدم `SUPABASE_SERVICE_ROLE_KEY`
+  على السيرفر فقط.
+- الواجهة تعرض: المالك، الخطة، حالة الاشتراك، نهاية التجربة، نهاية الاشتراك،
+  آخر تجديد، عدد المستندات والأعضاء.
+- التجديد يختار الخطة والمدة (30/90/180/365 يوماً). التجديد النشط يمدّ من تاريخ
+  الانتهاء الحالي، والمنتهي يبدأ من الآن.
+- تمديد التجربة يمنح 14/30/60/90 يوماً جديدة.
+- كل عملية تُسجّل في `public.platform_audit_logs`.
+- إن غاب `SUPABASE_SERVICE_ROLE_KEY` تعرض اللوحة تعليمات إعداد ولا تعرض بيانات.
+- يمكن استخدام `PLATFORM_ADMIN_EMAILS` كقائمة احتياطية قبل تطبيق migration الرابع.
 
 ---
 
@@ -183,6 +209,7 @@ npm install
 | [`web/supabase/migrations/202610210001_archifex_schema.sql`](./web/supabase/migrations/202610210001_archifex_schema.sql) | الجداول، الفهارس، Triggers، إنشاء المساحة عند التسجيل |
 | [`web/supabase/migrations/202610210002_archifex_rls_and_trial.sql`](./web/supabase/migrations/202610210002_archifex_rls_and_trial.sql) | دوال العضوية والتجربة، RLS، `create_workspace` |
 | [`web/supabase/migrations/202610210003_archifex_storage.sql`](./web/supabase/migrations/202610210003_archifex_storage.sql) | Bucket وسياسات Storage |
+| [`web/supabase/migrations/202610230004_platform_admin_and_subscriptions.sql`](./web/supabase/migrations/202610230004_platform_admin_and_subscriptions.sql) | فترات الاشتراك، قائمة مزودي الخدمة، سجل تدقيق المنصة |
 
 باستخدام Supabase CLI من مجلد `web`:
 
@@ -193,7 +220,9 @@ supabase db push
 
 أو نفّذ الملفات بالترتيب من **Supabase Dashboard → SQL Editor**.
 
-> **مهم:** migrations لم تُنفَّذ بعد على مشروع Supabase حي في هذه البيئة لعدم توفر بيانات الاعتماد. نفّذها ثم اختبر التسجيل فعلياً.
+> **مهم:** migration الرابع يضيف `hosn.77h@gmail.com` إلى `platform_admins` إذا كان
+> حساب المصادقة موجوداً. إذا أنشأت الحساب بعد تنفيذ الملف، أعد تنفيذ جملة `insert`
+> الأخيرة في الملف، أو أضف بريدك إلى `PLATFORM_ADMIN_EMAILS` في بيئة السيرفر.
 
 ### 4) متغيرات البيئة
 
@@ -209,10 +238,12 @@ Copy-Item .env.example .env.local
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+PLATFORM_ADMIN_EMAILS=hosn.77h@gmail.com
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 لا تضع `SUPABASE_SERVICE_ROLE_KEY` في أي متغير يبدأ بـ `NEXT_PUBLIC_`، ولا تستخدمه في مكوّن عميل.
+`PLATFORM_ADMIN_EMAILS` قائمة احتياطية اختيارية؛ الأولوية لقائمة `platform_admins` في قاعدة البيانات.
 
 ### 5) تشغيل التطبيق
 
@@ -258,11 +289,15 @@ where slug = 'YOUR_WORKSPACE_SLUG';
 ```sql
 update public.workspaces
 set subscription_status = 'active',
-    plan = 'professional'
+    plan = 'professional',
+    subscription_started_at = now(),
+    subscription_ends_at = now() + interval '365 days',
+    last_renewed_at = now()
 where slug = 'YOUR_WORKSPACE_SLUG';
 ```
 
-تغيير الحقول المحمية يجب أن يتم عبر `service_role` أو SQL Editor، وليس من المتصفح.
+نفس العملية متاحة من `/admin` لحساب مزود الخدمة. تغيير الحقول المحمية يجب أن يتم
+عبر `service_role` أو SQL Editor أو واجهة الإدارة، وليس من المتصفح.
 
 ### اختبار العزل
 
@@ -284,7 +319,8 @@ where slug = 'YOUR_WORKSPACE_SLUG';
 5. أضف متغيرات البيئة:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY` (سيرفر فقط)
+   - `PLATFORM_ADMIN_EMAILS` (اختياري كقائمة احتياطية)
    - `NEXT_PUBLIC_SITE_URL` = رابط الإنتاج
 6. Deploy.
 
@@ -334,7 +370,7 @@ netlify deploy --site archifex --dir . --prod --no-build
 
 - migrations وواجهات Next.js مكتوبة ومبنية بنجاح، لكنها لم تُختبر على مشروع Supabase حي بعد.
 - رفع الملفات الفعلي إلى Storage لم يُربط بواجهة بعد؛ سجلات المستندات تحفظ الميتاداتا، وسياسات Storage جاهزة.
-- بوابة الدفع/الاشتراك لم تُربط؛ تفعيل `subscription_status` يتم حالياً من السيرفر/SQL.
+- بوابة الدفع لم تُربط بعد؛ التجديد يتم يدوياً من لوحة `/admin` أو SQL، مع تسجيل كل عملية في `platform_audit_logs`.
 - الموقع الثابت الحالي لم يُحوَّل بالكامل إلى Next.js؛ بقي كواجهة عرض على Netlify.
 - لم يتم إنشاء مشروع Vercel بعد لعدم توفر صلاحيات/ربط المشروع.
 
@@ -342,10 +378,10 @@ netlify deploy --site archifex --dir . --prod --no-build
 
 ## الخطوات التالية
 
-1. تنفيذ migrations على Supabase واختبار trigger التسجيل.
-2. ربط Vercel بمجلد `web` وإضافة متغيرات البيئة.
+1. تنفيذ migrations الثلاثة الأولى ثم migration الرابع، واختبار trigger التسجيل و`/admin`.
+2. ربط Vercel بمجلد `web` وإضافة متغيرات البيئة بما فيها `SUPABASE_SERVICE_ROLE_KEY`.
 3. إضافة رفع فعلي إلى Storage مع presigned URLs أو Supabase upload.
-4. ربط بوابة دفع (Stripe/Paddle/Moyasar) لتحديث `subscription_status` عبر webhook.
+4. ربط بوابة دفع (Stripe/Paddle/Moyasar) لتحديث `subscription_status` و`subscription_ends_at` عبر webhook.
 5. إضافة دعوات الفريق وإدارة الأعضاء.
 6. إضافة اختبارات عزل RLS آلية في CI.
 

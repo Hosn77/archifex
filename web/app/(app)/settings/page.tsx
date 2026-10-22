@@ -73,7 +73,11 @@ export default async function SettingsPage() {
             </div>
             <span
               className={`badge ${
-                trial.isActiveSubscription ? "badge-success" : trial.canWrite ? "" : "badge-danger"
+                trial.canWrite
+                  ? trial.isActiveSubscription
+                    ? "badge-success"
+                    : ""
+                  : "badge-danger"
               }`}
             >
               {trial.label}
@@ -89,6 +93,24 @@ export default async function SettingsPage() {
               <dt>نهاية التجربة</dt>
               <dd>{formatArabicDate(current.workspace.trial_ends_at)}</dd>
             </div>
+            {current.workspace.subscription_started_at ? (
+              <div className="info-row">
+                <dt>بداية الاشتراك</dt>
+                <dd>{formatArabicDate(current.workspace.subscription_started_at)}</dd>
+              </div>
+            ) : null}
+            {current.workspace.subscription_ends_at ? (
+              <div className="info-row">
+                <dt>نهاية الاشتراك</dt>
+                <dd>{formatArabicDate(current.workspace.subscription_ends_at)}</dd>
+              </div>
+            ) : null}
+            {current.workspace.last_renewed_at ? (
+              <div className="info-row">
+                <dt>آخر تجديد</dt>
+                <dd>{formatArabicDate(current.workspace.last_renewed_at)}</dd>
+              </div>
+            ) : null}
             <div className="info-row">
               <dt>حالة الاشتراك</dt>
               <dd style={{ direction: "ltr" }}>{current.workspace.subscription_status}</dd>
@@ -108,16 +130,22 @@ export default async function SettingsPage() {
           </dl>
 
           <div className="billing-panel">
-            <h3>{!trial.canWrite ? "ترقية مطلوبة لاستئناف الكتابة" : "جاهز للترقية عند الحاجة"}</h3>
+            <h3>{!trial.canWrite ? "تجديد مطلوب لاستئناف الكتابة" : "الوصول إلى المساحة نشط"}</h3>
             <p>
               {!trial.canWrite
-                ? trial.trialExpired
-                  ? "انتهت التجربة. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران في قاعدة البيانات."
-                  : "الاشتراك غير نشط. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران حتى تفعيل الاشتراك."
-                : "ستبقى التجربة نشطة حتى التاريخ أعلاه. بعد انتهائها يمكنك الترقية لمواصلة الرفع والتعديل دون فقدان أي بيانات."}
+                ? trial.subscriptionExpired
+                  ? "انتهى الاشتراك. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران في قاعدة البيانات حتى التجديد."
+                  : trial.trialExpired
+                    ? "انتهت التجربة. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران في قاعدة البيانات."
+                    : "الاشتراك غير نشط. القراءة والتصدير متاحان، لكن إنشاء المستندات وتعديل الميتاداتا محظوران حتى تفعيل الاشتراك."
+                : trial.isActiveSubscription
+                  ? trial.subscriptionEndsAt
+                    ? `اشتراكك نشط حتى ${formatArabicDate(trial.subscriptionEndsAt)}. بعد هذا التاريخ تبقى القراءة متاحة وتُقيد الكتابة حتى التجديد.`
+                    : "اشتراكك نشط دون تاريخ انتهاء محدد. يمكنك مواصلة الرفع والتعديل."
+                  : "ستبقى التجربة نشطة حتى التاريخ أعلاه. بعد انتهائها يمكنك الترقية لمواصلة الرفع والتعديل دون فقدان أي بيانات."}
             </p>
             <p style={{ marginBottom: 0 }}>
-              يتم تفعيل الاشتراك من فريق مَدار فَلَك عبر service role بعد ربط بوابة الدفع.
+              يتم تفعيل الاشتراك وتجديده من فريق مَدار فَلَك عبر لوحة مزود الخدمة.
               لا تُرسل مفاتيح service role إلى المتصفح أبداً.
             </p>
           </div>
@@ -148,7 +176,11 @@ export default async function SettingsPage() {
           <p style={{ margin: 0, color: "#aebbd0", fontSize: 12, lineHeight: 1.9 }}>
             الكتابة مسموحة عندما يكون الاشتراك
             <code style={{ color: "#e0a96d", marginInline: 4 }}>active</code>
-            أو عندما تكون الحالة
+            و
+            <code style={{ color: "#e0a96d", marginInline: 4 }}>
+              subscription_ends_at
+            </code>
+            فارغاً أو في المستقبل، أو عندما تكون الحالة
             <code style={{ color: "#e0a96d", marginInline: 4 }}>trialing</code>
             و
             <code style={{ color: "#e0a96d", marginInline: 4 }}>now() &lt;= trial_ends_at</code>.

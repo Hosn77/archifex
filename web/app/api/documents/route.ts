@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   if (!trial.canWrite) {
     return NextResponse.json(
       {
-        error: "انتهت التجربة المجانية أو أن الاشتراك غير نشط. الكتابة متاحة للقراءة فقط حالياً.",
+        error: "انتهت التجربة المجانية أو الاشتراك. الكتابة متاحة للقراءة فقط حالياً.",
         code: "TRIAL_OR_SUBSCRIPTION_REQUIRED",
       },
       { status: 402 },

@@ -97,7 +97,13 @@ export default async function DashboardPage() {
         </div>
         <div className="stat-card">
           <span>الخطة الحالية</span>
-          <strong>{trial.isActiveSubscription ? "نشطة" : "تجربة"}</strong>
+          <strong>
+            {trial.subscriptionExpired
+              ? "منتهية"
+              : trial.isActiveSubscription
+                ? "نشطة"
+                : "تجربة"}
+          </strong>
           <small>{trial.label}</small>
         </div>
       </div>
@@ -168,6 +174,12 @@ export default async function DashboardPage() {
               <dt>نهاية التجربة</dt>
               <dd>{formatArabicDate(current.workspace.trial_ends_at)}</dd>
             </div>
+            {current.workspace.subscription_ends_at ? (
+              <div className="info-row">
+                <dt>نهاية الاشتراك</dt>
+                <dd>{formatArabicDate(current.workspace.subscription_ends_at)}</dd>
+              </div>
+            ) : null}
             <div className="info-row">
               <dt>حالة الاشتراك</dt>
               <dd>{current.workspace.subscription_status}</dd>
@@ -180,10 +192,14 @@ export default async function DashboardPage() {
 
           {!trial.canWrite ? (
             <div className="billing-panel">
-              <h3>الكتابة مقيدة مؤقتاً</h3>
-              <p>يمكنك القراءة والتصدير، لكن الرفع وتعديل البيانات يحتاجان اشتراكاً نشطاً.</p>
+              <h3>{trial.subscriptionExpired ? "انتهى الاشتراك" : "الكتابة مقيدة مؤقتاً"}</h3>
+              <p>
+                {trial.subscriptionExpired
+                  ? "انتهت فترة الاشتراك. يمكنك القراءة والتصدير، ويستأنف الرفع والتعديل بعد التجديد."
+                  : "يمكنك القراءة والتصدير، لكن الرفع وتعديل البيانات يحتاجان اشتراكاً نشطاً."}
+              </p>
               <Link className="button button-gold button-small" href="/settings#billing">
-                ترقية المساحة
+                {trial.subscriptionExpired ? "تجديد الاشتراك" : "ترقية المساحة"}
               </Link>
             </div>
           ) : null}

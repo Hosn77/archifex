@@ -6,6 +6,7 @@ import { SetupNotice } from "@/components/SetupNotice";
 import { SidebarNav } from "@/components/SidebarNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TrialBanner } from "@/components/TrialBanner";
+import { isPlatformAdmin } from "@/lib/platform-admin";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { getTrialState } from "@/lib/trial";
 import type { WorkspaceRole } from "@/lib/types";
@@ -47,6 +48,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   }
 
   const trial = getTrialState(current.workspace);
+  const platformAdmin = await isPlatformAdmin(supabase, user);
 
   return (
     <div className="app-shell">
@@ -58,7 +60,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           <small>{roleLabels[current.membership.role]}</small>
         </div>
 
-        <SidebarNav />
+        <SidebarNav isPlatformAdmin={platformAdmin} />
 
         <div className="sidebar-footer">
           <div className="sidebar-user">
@@ -76,7 +78,11 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           </span>
           <span
             className={`badge ${
-              trial.isActiveSubscription ? "badge-success" : trial.canWrite ? "" : "badge-danger"
+              trial.canWrite
+                ? trial.isActiveSubscription
+                  ? "badge-success"
+                  : ""
+                : "badge-danger"
             }`}
           >
             {trial.label}
