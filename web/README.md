@@ -21,7 +21,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Fill `.env.local`:
+Fill `.env.local` (use the project URL only, without `/rest/v1` or `/auth/v1`):
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co

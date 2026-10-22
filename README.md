@@ -205,6 +205,7 @@ Copy-Item .env.example .env.local
 املأ:
 
 ```env
+# رابط المشروع فقط، بدون /rest/v1 أو /auth/v1
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
